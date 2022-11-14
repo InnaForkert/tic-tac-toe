@@ -1,0 +1,19 @@
+.fieldy {
+  outline: 1px solid black;
+  width: calc(100%/3);
+  height: 16vw;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 50vw;
+  border: 1px solid black;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 30px;
+}

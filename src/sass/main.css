@@ -1,0 +1,29 @@
+.fieldy {
+  outline: 1px solid black;
+  width: 33.3333333333%;
+  height: 16vw;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 50vw;
+  border: 1px solid black;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  margin-bottom: 30px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.submit {
+  max-width: 150px;
+}/*# sourceMappingURL=main.css.map */
