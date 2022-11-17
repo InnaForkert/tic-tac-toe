@@ -1,27 +1,36 @@
 {
-  "name": "template",
+  "name": "tic-tac-toe",
   "version": "1.0.0",
-  "description": "template",
+  "description": "tic-tac-toe",
   "scripts": {
     "test": "test",
-    "start": "parcel index.html"
+    "start": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /tic-tac-toe/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/InnaForkert/template.git"
+    "url": "git+https://github.com/InnaForkert/tic-tac-toe.git"
   },
   "author": "Inna Forkert",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/InnaForkert/template/issues"
+    "url": "https://github.com/InnaForkert/tic-tac-toe/issues"
   },
-  "homepage": "https://github.com/InnaForkert/template#readme",
+  "homepage": "https://github.com/InnaForkert/tic-tac-toe",
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.6.0",
     "@parcel/transformer-sass": "^2.7.0",
-    "parcel": "^2.7.0"
+    "@parcel/transformer-webmanifest": "^2.6.0",
+    "modern-normalize": "^1.1.0",
+    "parcel": "^2.7.0",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "posthtml-include": "^1.7.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.3"
   },
   "dependencies": {
     "autoprefixer": "^10.4.13",
     "cloudinary": "^1.32.0"
-  }
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
 }
