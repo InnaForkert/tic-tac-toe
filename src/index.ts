@@ -37,25 +37,36 @@ fieldies.forEach((fieldy) => {
   const currentSaveX = localStorage.getItem("playerX");
   if (currentSaveX) {
     currentComboX = JSON.parse(currentSaveX);
-    showField();
     paintSaved("X", currentComboX);
   }
   const currentSaveO = localStorage.getItem("playerO");
   if (currentSaveO) {
     currentComboO = JSON.parse(currentSaveO);
-    showField();
     paintSaved("O", currentComboO);
   }
 
   let name1 = localStorage.getItem("player1");
   let name2 = localStorage.getItem("player2");
   if (name1 && name2) {
-    setPlayers(JSON.parse(name1), JSON.parse(name2));
+    setPlayers(name1, name2);
+    showField();
   }
 
-  let savedActive = localStorage.getItem("activePlayer");
-  if (savedActive) currentSymbol = savedActive;
+  const savedActive = localStorage.getItem("activePlayer");
+  if (savedActive) currentSymbol = JSON.parse(savedActive);
 })();
+
+function reset() {
+  localStorage.removeItem("playerX");
+  localStorage.removeItem("playerO");
+  localStorage.removeItem("activePlayer");
+  location.reload();
+}
+
+function restart() {
+  localStorage.clear();
+  location.reload();
+}
 
 function paintSaved(N: string, arr: number[]) {
   fieldies.forEach((fieldy) => {
@@ -76,10 +87,20 @@ function checkForVictory(arr: number[]) {
   );
   if (victory) {
     setTimeout(() => {
-      alert("Victory");
-      localStorage.clear();
+      const wantsMore = confirm("Victory! One more round?");
+      if (wantsMore) reset();
+      else restart();
     }, 0);
-    location.reload();
+  } else checkForNoMoves();
+}
+
+function checkForNoMoves() {
+  if (currentComboO.length === 4 && currentComboX.length === 5) {
+    setTimeout(() => {
+      const wantsReset = confirm("Oh no, no more moves! Reset?");
+      wantsReset ? reset() : restart();
+      return;
+    }, 0);
   }
 }
 
@@ -89,15 +110,14 @@ function handlePlayerMove(e: MouseEvent) {
   target.innerText = currentSymbol;
   if (currentSymbol === "X") {
     currentComboX.push(Number(target.dataset.id));
-    checkForVictory(currentComboX);
+    if (currentComboX.length > 2) checkForVictory(currentComboX);
   } else {
     currentComboO.push(Number(target.dataset.id));
-    checkForVictory(currentComboO);
+    if (currentComboO.length > 2) checkForVictory(currentComboO);
   }
+
   currentSymbol = currentSymbol === "X" ? "O" : "X";
   localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-  player1GameName?.classList.toggle("active-player");
-  player2GameName?.classList.toggle("active-player");
   swapPlayers();
   saveData();
 }
@@ -108,6 +128,8 @@ function swapPlayers() {
   } else {
     activePlayer = player1Name;
   }
+  player1GameName?.classList.toggle("active-player");
+  player2GameName?.classList.toggle("active-player");
 }
 
 function handleSubmit(e: SubmitEvent) {
