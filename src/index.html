@@ -20,12 +20,12 @@
         <button type="submit" class="submit">Submit</button>
       </form>
     </div>
-    <div class="gameDiv">
+    <div class="gameDiv visually-hidden">
       <aside>
         <h2 id="player1Name" class="active-player"></h2>
         <h2 id="player2Name" class=""></h2>
       </aside>
-      <div class="field visually-hidden">
+      <div class="field">
         <div class="fieldy" data-id="1"></div>
         <div class="fieldy" data-id="2"></div>
         <div class="fieldy" data-id="3"></div>
@@ -36,6 +36,8 @@
         <div class="fieldy" data-id="8"></div>
         <div class="fieldy" data-id="9"></div>
       </div>
+      <button id="resetBtn">Reset</button>
+      <button id="restartBtn">Restart</button>
     </div>
     <script>
       var exports = {};

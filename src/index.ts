@@ -2,6 +2,7 @@ export const stuf = [];
 
 const menu: HTMLElement | null = document.querySelector(".menu");
 const field: HTMLElement | null = document.querySelector(".field");
+const gameDiv = document.querySelector(".gameDiv");
 const form: HTMLElement | null = document.querySelector(".form");
 const player1: HTMLInputElement | null = document.querySelector("#player1");
 const player2: HTMLInputElement | null = document.querySelector("#player2");
@@ -20,6 +21,8 @@ const winningCombos = [
   [1, 5, 9],
   [3, 5, 7],
 ];
+const restartBtn = document.querySelector("#restartBtn");
+const resetBtn = document.querySelector("#resetBtn");
 
 let currentComboX: number[] = [];
 let currentComboO: number[] = [];
@@ -31,6 +34,10 @@ let player2Name: string;
 if (form) form.addEventListener("submit", handleSubmit);
 fieldies.forEach((fieldy) => {
   fieldy.addEventListener("click", handlePlayerMove);
+});
+resetBtn?.addEventListener("click", reset);
+restartBtn?.addEventListener("click", () => {
+  if (confirm("Are you sure you want to restart?")) restart();
 });
 
 (function checkSaves() {
@@ -161,5 +168,5 @@ function setPlayers(name1: string, name2: string) {
 
 function showField() {
   menu?.classList.add("visually-hidden");
-  field?.classList.remove("visually-hidden");
+  gameDiv?.classList.remove("visually-hidden");
 }

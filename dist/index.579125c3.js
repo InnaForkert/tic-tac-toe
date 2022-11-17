@@ -4,6 +4,7 @@ exports.stuf = void 0;
 exports.stuf = [];
 var menu = document.querySelector(".menu");
 var field = document.querySelector(".field");
+var gameDiv = document.querySelector(".gameDiv");
 var form = document.querySelector(".form");
 var player1 = document.querySelector("#player1");
 var player2 = document.querySelector("#player2");
@@ -52,6 +53,8 @@ var winningCombos = [
         7
     ], 
 ];
+var restartBtn = document.querySelector("#restartBtn");
+var resetBtn = document.querySelector("#resetBtn");
 var currentComboX = [];
 var currentComboO = [];
 var currentSymbol = "X";
@@ -61,6 +64,10 @@ var player2Name;
 if (form) form.addEventListener("submit", handleSubmit);
 fieldies.forEach(function(fieldy) {
     fieldy.addEventListener("click", handlePlayerMove);
+});
+resetBtn === null || resetBtn === void 0 || resetBtn.addEventListener("click", reset);
+restartBtn === null || restartBtn === void 0 || restartBtn.addEventListener("click", function() {
+    if (confirm("Are you sure?")) restart();
 });
 (function checkSaves() {
     var currentSaveX = localStorage.getItem("playerX");
@@ -168,7 +175,7 @@ function setPlayers(name1, name2) {
 }
 function showField() {
     menu === null || menu === void 0 || menu.classList.add("visually-hidden");
-    field === null || field === void 0 || field.classList.remove("visually-hidden");
+    gameDiv === null || gameDiv === void 0 || gameDiv.classList.remove("visually-hidden");
 }
 
 //# sourceMappingURL=index.579125c3.js.map
