@@ -53,9 +53,14 @@ fieldies.forEach(function (fieldy) {
         currentSymbol = JSON.parse(savedActive);
 })();
 function reset() {
+    var placeholderName = localStorage.getItem("player1") || "Player2";
+    player1Name = localStorage.getItem("player2") || "Player1";
+    player2Name = placeholderName || "Player2";
     localStorage.removeItem("playerX");
     localStorage.removeItem("playerO");
     localStorage.removeItem("activePlayer");
+    localStorage.setItem("player1", player1Name);
+    localStorage.setItem("player2", player2Name);
     location.reload();
 }
 function restart() {
@@ -93,15 +98,7 @@ function checkForNoMoves() {
     if (currentComboO.length === 4 && currentComboX.length === 5) {
         setTimeout(function () {
             var wantsReset = confirm("Oh no, no more moves! Reset?");
-            if (wantsReset) {
-                console.log(player2Name);
-                localStorage.setItem("player1", player2Name);
-                localStorage.setItem("player2", player1Name);
-                reset();
-            }
-            else {
-                restart();
-            }
+            wantsReset ? reset() : restart();
             return;
         }, 0);
     }
@@ -110,6 +107,13 @@ function handlePlayerMove(e) {
     var target = e.target;
     target.removeEventListener("click", handlePlayerMove);
     target.innerText = currentSymbol;
+    updateCombos(target);
+    currentSymbol = currentSymbol === "X" ? "O" : "X";
+    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+    swapPlayers();
+    saveData();
+}
+function updateCombos(target) {
     if (currentSymbol === "X") {
         currentComboX.push(Number(target.dataset.id));
         if (currentComboX.length > 2)
@@ -120,10 +124,6 @@ function handlePlayerMove(e) {
         if (currentComboO.length > 2)
             checkForVictory(currentComboO);
     }
-    currentSymbol = currentSymbol === "X" ? "O" : "X";
-    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-    swapPlayers();
-    saveData();
 }
 function swapPlayers() {
     if (activePlayer === "" || player1Name) {

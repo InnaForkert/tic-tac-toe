@@ -57,9 +57,16 @@ fieldies.forEach((fieldy) => {
 })();
 
 function reset() {
+  const placeholderName = localStorage.getItem("player1") || "Player2";
+  player1Name = localStorage.getItem("player2") || "Player1";
+  player2Name = placeholderName || "Player2";
+
   localStorage.removeItem("playerX");
   localStorage.removeItem("playerO");
   localStorage.removeItem("activePlayer");
+
+  localStorage.setItem("player1", player1Name);
+  localStorage.setItem("player2", player2Name);
   location.reload();
 }
 
@@ -108,6 +115,14 @@ function handlePlayerMove(e: MouseEvent) {
   const target = e.target as HTMLElement;
   target.removeEventListener("click", handlePlayerMove);
   target.innerText = currentSymbol;
+  updateCombos(target);
+  currentSymbol = currentSymbol === "X" ? "O" : "X";
+  localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+  swapPlayers();
+  saveData();
+}
+
+function updateCombos(target: HTMLElement) {
   if (currentSymbol === "X") {
     currentComboX.push(Number(target.dataset.id));
     if (currentComboX.length > 2) checkForVictory(currentComboX);
@@ -115,11 +130,6 @@ function handlePlayerMove(e: MouseEvent) {
     currentComboO.push(Number(target.dataset.id));
     if (currentComboO.length > 2) checkForVictory(currentComboO);
   }
-
-  currentSymbol = currentSymbol === "X" ? "O" : "X";
-  localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-  swapPlayers();
-  saveData();
 }
 
 function swapPlayers() {
