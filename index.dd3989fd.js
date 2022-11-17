@@ -1,2 +1,0 @@
-"use strict";exports.__esModule=!0,exports.constForExport=void 0,exports.constForExport="";var field=document.querySelector(".field"),form=document.querySelector(".form"),player1=document.querySelector("#player1"),player2=document.querySelector("#player2");function handleSubmit(e){e.preventDefault();null==player1||player1.value,null==player2||player2.value}form&&form.addEventListener("submit",handleSubmit),function(e){for(var r=[],o=1;o<=e;o+=1)r.push("<div class='fieldy' id='".concat(o,"'></div>"));field.innerHTML=r.join("")}(9);
-//# sourceMappingURL=index.dd3989fd.js.map
