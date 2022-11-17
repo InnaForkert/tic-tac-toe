@@ -1,2 +1,0 @@
-const field=document.querySelector(".field"),form=document.querySelector(".form");function handleSubmit(e){e.preventDefault();const{elements:{player1:t,player2:i}}=e.target}function createFieldies(e){const t=[];for(let i=1;i<=e;i+=1)t.push(`<div class='fieldy' id='${i}'></div>`);field.innerHTML=t.join("")}form.addEventListener("submit",handleSubmit),createFieldies(9);
-//# sourceMappingURL=index.81533c8c.js.map
