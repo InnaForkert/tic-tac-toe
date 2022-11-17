@@ -12,16 +12,31 @@
       <h1 class="title">Hi! Enter your names</h1>
       <form class="form">
         <label
-          >Player 1 <input type="text" name="player1" id="player1"
+          >Player X <input type="text" name="player1" id="player1"
         /></label>
         <label
-          >Player 2 <input type="text" name="player2" id="player2"
+          >Player O <input type="text" name="player2" id="player2"
         /></label>
         <button type="submit" class="submit">Submit</button>
       </form>
     </div>
-    <h1 class="title">Tic-tac-toe</h1>
-    <div class="field"></div>
+    <div class="gameDiv">
+      <aside>
+        <h2 id="player1Name" class="active-player"></h2>
+        <h2 id="player2Name" class=""></h2>
+      </aside>
+      <div class="field visually-hidden">
+        <div class="fieldy" data-id="1"></div>
+        <div class="fieldy" data-id="2"></div>
+        <div class="fieldy" data-id="3"></div>
+        <div class="fieldy" data-id="4"></div>
+        <div class="fieldy" data-id="5"></div>
+        <div class="fieldy" data-id="6"></div>
+        <div class="fieldy" data-id="7"></div>
+        <div class="fieldy" data-id="8"></div>
+        <div class="fieldy" data-id="9"></div>
+      </div>
+    </div>
     <script>
       var exports = {};
     </script>

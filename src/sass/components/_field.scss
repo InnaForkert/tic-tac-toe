@@ -1,7 +1,11 @@
 .fieldy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   outline: 1px solid black;
-  width: calc(100%/3);
+  width: calc(100% / 3);
   height: 16vw;
+  font-size: 48px;
 }
 
 .field {
@@ -16,4 +20,8 @@
   text-align: center;
   margin: 0;
   margin-bottom: 30px;
+}
+
+.active-player {
+  color: red;
 }
