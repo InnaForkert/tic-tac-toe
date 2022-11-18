@@ -72,17 +72,31 @@ body {
 
 .fieldy {
   width: 33.3333%;
-  height: 12vw;
+  max-height: 317px;
+  height: 10vw;
   background-color: #c5c5c533;
   outline: 1px solid #0000005c;
   justify-content: center;
   align-items: center;
-  font-size: 48px;
+  font-size: 3rem;
   display: flex;
 }
 
+@media screen and (max-width: 480px) {
+  .fieldy {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .fieldy {
+    font-size: 7rem;
+  }
+}
+
 .field {
-  width: 40vw;
+  width: 30vw;
+  max-width: 950px;
   border: 1px solid #0000006a;
   border-radius: 4px;
   flex-wrap: wrap;
