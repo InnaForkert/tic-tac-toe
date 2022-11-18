@@ -1,19 +1,33 @@
+.gameDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  gap: 35px;
+}
+
 .fieldy {
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: 1px solid black;
+  outline: 1px solid rgba(0, 0, 0, 0.359);
   width: calc(100% / 3);
   height: 10vw;
   font-size: 48px;
+  background-color: rgba(197, 197, 197, 0.2);
 }
 
 .field {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 auto;
+  margin: 15px auto;
   width: 30vw;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.416);
+  transform: translateY(-45px);
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .title {
@@ -22,6 +36,22 @@
   margin-bottom: 30px;
 }
 
+.player-name {
+  font-family: main-font, sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  margin-block: 25px;
+
+  transition: font-size 250ms ease-in-out;
+}
+
 .active-player {
   color: red;
+  font-size: 2rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  transform: translateY(-45px);
 }

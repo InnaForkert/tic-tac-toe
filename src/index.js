@@ -154,8 +154,8 @@ function handleSubmit(e) {
 }
 function setPlayers(name1, name2) {
     if (player1GameName && player2GameName) {
-        player1GameName.innerText = name1;
-        player2GameName.innerText = name2;
+        player1GameName.innerText = "PlayerX: ".concat(name1);
+        player2GameName.innerText = "PlayerO: ".concat(name2);
     }
 }
 function showField() {

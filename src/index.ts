@@ -162,8 +162,8 @@ function handleSubmit(e: SubmitEvent) {
 
 function setPlayers(name1: string, name2: string) {
   if (player1GameName && player2GameName) {
-    player1GameName.innerText = name1;
-    player2GameName.innerText = name2;
+    player1GameName.innerText = `PlayerX: ${name1}`;
+    player2GameName.innerText = `PlayerO: ${name2}`;
   }
 }
 
