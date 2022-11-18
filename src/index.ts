@@ -100,42 +100,43 @@ function checkForVictory(arr: number[]) {
     combo.every((num) => arr.includes(num))
   );
   if (victory) {
-    setTimeout(() => {
-      const wantsMore = confirm("Victory! One more round?");
-      if (wantsMore) reset();
-      else restart();
-    }, 0);
+    const wantsMore = confirm("Victory! One more round?");
+    if (wantsMore) reset();
+    else restart();
   } else checkForNoMoves();
 }
 
 function checkForNoMoves() {
   if (currentComboO.length === 4 && currentComboX.length === 5) {
-    setTimeout(() => {
-      const wantsReset = confirm("Oh no, no more moves! Reset?");
-      wantsReset ? reset() : restart();
-      return;
-    }, 0);
+    const wantsReset = confirm("Oh no, no more moves! Reset?");
+    wantsReset ? reset() : restart();
+    return;
   }
 }
 
 function handlePlayerMove(e: MouseEvent) {
   const target = e.target as HTMLElement;
-  target.removeEventListener("click", handlePlayerMove);
-  target.innerText = currentSymbol;
-  updateCombos(target);
-  currentSymbol = currentSymbol === "X" ? "O" : "X";
-  localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-  swapPlayers();
-  saveData();
+  if (target.textContent === "") {
+    target.innerText = currentSymbol;
+    updateCombos(target);
+    currentSymbol = currentSymbol === "X" ? "O" : "X";
+    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+    swapPlayers();
+    saveData();
+  } else {
+    alert("This one is taken!");
+  }
 }
 
 function updateCombos(target: HTMLElement) {
   if (currentSymbol === "X") {
     currentComboX.push(Number(target.dataset.id));
-    if (currentComboX.length > 2) checkForVictory(currentComboX);
+    if (currentComboX.length > 2)
+      setTimeout(() => checkForVictory(currentComboX), 0);
   } else {
     currentComboO.push(Number(target.dataset.id));
-    if (currentComboO.length > 2) checkForVictory(currentComboO);
+    if (currentComboO.length > 2)
+      setTimeout(() => checkForVictory(currentComboO), 0);
   }
 }
 

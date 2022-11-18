@@ -13,7 +13,7 @@
 
 .fieldy {
   width: 33.3333%;
-  height: 16vw;
+  height: 10vw;
   outline: 1px solid #000;
   justify-content: center;
   align-items: center;
@@ -22,7 +22,7 @@
 }
 
 .field {
-  width: 50vw;
+  width: 30vw;
   border: 1px solid #000;
   flex-wrap: wrap;
   margin: 0 auto;

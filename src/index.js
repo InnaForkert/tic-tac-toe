@@ -36,7 +36,7 @@ fieldies.forEach(function (fieldy) {
 });
 resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener("click", reset);
 restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListener("click", function () {
-    if (confirm("Are you sure?"))
+    if (confirm("Are you sure you want to restart?"))
         restart();
 });
 (function checkSaves() {
@@ -91,46 +91,46 @@ function checkForVictory(arr) {
         return combo.every(function (num) { return arr.includes(num); });
     });
     if (victory) {
-        setTimeout(function () {
-            var wantsMore = confirm("Victory! One more round?");
-            if (wantsMore)
-                reset();
-            else
-                restart();
-        }, 0);
+        var wantsMore = confirm("Victory! One more round?");
+        if (wantsMore)
+            reset();
+        else
+            restart();
     }
     else
         checkForNoMoves();
 }
 function checkForNoMoves() {
     if (currentComboO.length === 4 && currentComboX.length === 5) {
-        setTimeout(function () {
-            var wantsReset = confirm("Oh no, no more moves! Reset?");
-            wantsReset ? reset() : restart();
-            return;
-        }, 0);
+        var wantsReset = confirm("Oh no, no more moves! Reset?");
+        wantsReset ? reset() : restart();
+        return;
     }
 }
 function handlePlayerMove(e) {
     var target = e.target;
-    target.removeEventListener("click", handlePlayerMove);
-    target.innerText = currentSymbol;
-    updateCombos(target);
-    currentSymbol = currentSymbol === "X" ? "O" : "X";
-    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-    swapPlayers();
-    saveData();
+    if (target.textContent === "") {
+        target.innerText = currentSymbol;
+        updateCombos(target);
+        currentSymbol = currentSymbol === "X" ? "O" : "X";
+        localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+        swapPlayers();
+        saveData();
+    }
+    else {
+        alert("This one is taken!");
+    }
 }
 function updateCombos(target) {
     if (currentSymbol === "X") {
         currentComboX.push(Number(target.dataset.id));
         if (currentComboX.length > 2)
-            checkForVictory(currentComboX);
+            setTimeout(function () { return checkForVictory(currentComboX); }, 0);
     }
     else {
         currentComboO.push(Number(target.dataset.id));
         if (currentComboO.length > 2)
-            checkForVictory(currentComboO);
+            setTimeout(function () { return checkForVictory(currentComboO); }, 0);
     }
 }
 function swapPlayers() {
