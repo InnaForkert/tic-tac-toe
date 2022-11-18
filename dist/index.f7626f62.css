@@ -26,11 +26,11 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   font-family: secondary-font, sans-serif;
-  overflow: hidden;
 }
 
 * {
   cursor: url("paper-plane-svgrepo-com.dc981c24.svg"), auto;
+  overflow: hidden;
 }
 
 .button {

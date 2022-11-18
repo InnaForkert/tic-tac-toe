@@ -3,12 +3,12 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 
-  overflow: hidden;
   font-family: secondary-font, sans-serif;
 }
 
 * {
   cursor: $cursor;
+  overflow: hidden;
 }
 
 .button {
