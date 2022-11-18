@@ -20,6 +20,7 @@
   background-color: rgba(197, 197, 197, 0.2);
   @media screen and (max-width: 480px) {
     font-size: 2rem;
+    height: 20vw;
   }
   @media screen and (min-width: 1200px) {
     font-size: 7rem;
@@ -36,6 +37,9 @@
   transform: translateY(-45px);
   border-radius: 4px;
   overflow: hidden;
+  @media screen and (max-width: 480px) {
+    width: 60vw;
+  }
 }
 
 .title {

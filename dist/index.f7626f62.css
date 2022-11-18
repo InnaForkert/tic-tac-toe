@@ -84,6 +84,7 @@ body {
 
 @media screen and (max-width: 480px) {
   .fieldy {
+    height: 20vw;
     font-size: 2rem;
   }
 }
@@ -104,6 +105,12 @@ body {
   display: flex;
   overflow: hidden;
   transform: translateY(-45px);
+}
+
+@media screen and (max-width: 480px) {
+  .field {
+    width: 60vw;
+  }
 }
 
 .title {
