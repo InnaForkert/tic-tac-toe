@@ -123,6 +123,7 @@ body {
   margin-block: 25px;
   font-family: main-font, sans-serif;
   font-size: 1rem;
+  font-weight: 400;
   transition: font-size .25s ease-in-out;
 }
 
