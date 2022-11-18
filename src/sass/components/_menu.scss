@@ -1,8 +1,79 @@
+.menu {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px
+  gap: 15px;
+  align-items: center;
+
+  &-label {
+    position: relative;
+    font-family: secondary-font, sans-serif;
+    font-size: 2rem;
+    color: $black;
+  }
+
+  &-input {
+    display: block;
+    width: 60vw;
+    padding: 10px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    font-family: secondary-font, sans-serif;
+    font-size: 1.5rem;
+
+    &:focus,
+    &:hover {
+      outline: 1px solid $black;
+    }
+  }
 }
+
+.title {
+  font-family: main-font, sans-serif;
+  font-size: 4rem;
+  font-weight: 400;
+  color: rgb(8, 8, 24);
+}
+
 .submit {
-  max-width: 150px;
+  align-self: center;
+  margin-top: 15px;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
+  color: $black;
+  cursor: pointer;
+  font-family: secondary-font, sans-serif;
+  font-size: 1.5rem;
+  padding: 0.45rem 1rem;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.submit:hover {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+
+.submit:focus {
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
 }
