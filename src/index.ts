@@ -152,8 +152,8 @@ function swapPlayers() {
 
 function handleSubmit(e: SubmitEvent) {
   e.preventDefault();
-  player1Name = player1?.value || "Player1";
-  player2Name = player2?.value || "Player2";
+  player1Name = player1?.value || "Player I";
+  player2Name = player2?.value || "Player II";
   localStorage.setItem("player1", player1Name);
   localStorage.setItem("player2", player2Name);
   showField();

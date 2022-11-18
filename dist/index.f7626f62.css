@@ -1,0 +1,165 @@
+@font-face {
+  font-family: main-font;
+  src: url("LoveGlitchPersonalUseRegular-vmEyA.640bf4d6.ttf");
+}
+
+@font-face {
+  font-family: secondary-font;
+  src: url("UglyByteFreeTrial-K7EBZ.9c1eeeb4.otf");
+}
+
+.visually-hidden {
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+body {
+  background-image: url("design-space-paper-textured-background_53876-42312.426a64ae.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: secondary-font, sans-serif;
+  overflow: hidden;
+}
+
+* {
+  cursor: url("paper-plane-svgrepo-com.dc981c24.svg"), auto;
+}
+
+.button {
+  color: #080818;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  background-color: #fff;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+  align-self: center;
+  margin-top: 15px;
+  padding: .45rem 1rem;
+  font-family: secondary-font, sans-serif;
+  font-size: 1.5rem;
+  transition: all .235s ease-in-out;
+  box-shadow: 15px 28px 25px -18px #0003;
+}
+
+.button:hover {
+  transform: translate3d(0, 2px, 0);
+  box-shadow: 2px 8px 8px -5px #0000004d;
+}
+
+.button:focus {
+  box-shadow: 2px 8px 4px -6px #0000004d;
+}
+
+.gameDiv {
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  display: flex;
+}
+
+.fieldy {
+  width: 33.3333%;
+  height: 12vw;
+  background-color: #c5c5c533;
+  outline: 1px solid #0000005c;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  display: flex;
+}
+
+.field {
+  width: 40vw;
+  border: 1px solid #0000006a;
+  border-radius: 4px;
+  flex-wrap: wrap;
+  margin: 15px auto;
+  display: flex;
+  overflow: hidden;
+  transform: translateY(-45px);
+}
+
+.title {
+  text-align: center;
+  margin: 0 0 30px;
+}
+
+.player-name {
+  text-align: center;
+  margin-block: 25px;
+  font-family: main-font, sans-serif;
+  font-size: 1rem;
+  transition: font-size .25s ease-in-out;
+}
+
+.active-player {
+  color: red;
+  font-size: 2rem;
+}
+
+.buttons {
+  gap: 15px;
+  display: flex;
+  transform: translateY(-45px);
+}
+
+.menu {
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.form {
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  display: flex;
+}
+
+.form-label {
+  color: #080818;
+  font-family: secondary-font, sans-serif;
+  font-size: 2rem;
+  position: relative;
+}
+
+.form-input {
+  width: 60vw;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  padding: 10px;
+  font-family: secondary-font, sans-serif;
+  font-size: 1.5rem;
+  display: block;
+  box-shadow: 0 50px 100px -20px #32325d40, 0 30px 60px -30px #0000004d, inset 0 -2px 6px #0a254059;
+}
+
+.form-input:focus, .form-input:hover {
+  outline: 1px solid #080818;
+}
+
+.title {
+  color: #080818;
+  font-family: main-font, sans-serif;
+  font-size: 4rem;
+  font-weight: 400;
+}
+
+/*# sourceMappingURL=index.f7626f62.css.map */
