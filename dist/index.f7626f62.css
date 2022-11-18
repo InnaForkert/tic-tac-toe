@@ -134,6 +134,7 @@ body {
 
 .buttons {
   gap: 15px;
+  padding-bottom: 20px;
   display: flex;
   transform: translateY(-45px);
 }
@@ -151,6 +152,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  padding-bottom: 20px;
   display: flex;
 }
 
