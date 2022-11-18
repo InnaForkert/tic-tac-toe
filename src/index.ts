@@ -64,9 +64,9 @@ restartBtn?.addEventListener("click", () => {
 })();
 
 function reset() {
-  const placeholderName = localStorage.getItem("player1") || "Player2";
-  player1Name = localStorage.getItem("player2") || "Player1";
-  player2Name = placeholderName || "Player2";
+  const placeholderName = localStorage.getItem("player1") || "Player II";
+  player1Name = localStorage.getItem("player2") || "Player I";
+  player2Name = placeholderName || "Player II";
 
   localStorage.removeItem("playerX");
   localStorage.removeItem("playerO");
