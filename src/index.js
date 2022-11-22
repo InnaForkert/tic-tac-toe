@@ -320,6 +320,26 @@ function buildCombo() {
             handleBotMove(8);
         }, 600);
     }
+    else if (!fieldiesBot[1].innerText) {
+        setTimeout(function () {
+            handleBotMove(1);
+        }, 600);
+    }
+    else if (!fieldiesBot[3].innerText) {
+        setTimeout(function () {
+            handleBotMove(3);
+        }, 600);
+    }
+    else if (!fieldiesBot[5].innerText) {
+        setTimeout(function () {
+            handleBotMove(5);
+        }, 600);
+    }
+    else if (!fieldiesBot[7].innerText) {
+        setTimeout(function () {
+            handleBotMove(7);
+        }, 600);
+    }
 }
 function handleBotMove(num) {
     fieldiesBot[num].innerText = currentSymbol;

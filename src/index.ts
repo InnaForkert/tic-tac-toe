@@ -302,6 +302,22 @@ function buildCombo() {
     setTimeout(() => {
       handleBotMove(8);
     }, 600);
+  } else if (!fieldiesBot[1].innerText) {
+    setTimeout(() => {
+      handleBotMove(1);
+    }, 600);
+  } else if (!fieldiesBot[3].innerText) {
+    setTimeout(() => {
+      handleBotMove(3);
+    }, 600);
+  } else if (!fieldiesBot[5].innerText) {
+    setTimeout(() => {
+      handleBotMove(5);
+    }, 600);
+  } else if (!fieldiesBot[7].innerText) {
+    setTimeout(() => {
+      handleBotMove(7);
+    }, 600);
   }
 }
 
