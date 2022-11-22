@@ -1,16 +1,16 @@
 "use strict";
 exports.__esModule = true;
-exports.stuf = void 0;
-exports.stuf = [];
 var menu = document.querySelector(".menu");
 var field = document.querySelector(".field");
 var gameDiv = document.querySelector(".gameDiv");
+var gameDivBot = document.querySelector(".gameDivBot");
 var form = document.querySelector(".form");
 var player1 = document.querySelector("#player1");
 var player2 = document.querySelector("#player2");
 var player1GameName = document.querySelector("#player1Name");
 var player2GameName = document.querySelector("#player2Name");
 var fieldies = document.querySelectorAll(".fieldy");
+var fieldiesBot = document.querySelectorAll(".fieldyBot");
 var winningCombos = [
     [1, 2, 3],
     [4, 5, 6],
@@ -23,6 +23,7 @@ var winningCombos = [
 ];
 var restartBtn = document.querySelector("#restartBtn");
 var resetBtn = document.querySelector("#resetBtn");
+var botStart = document.querySelector(".botButton");
 var currentComboX = [];
 var currentComboO = [];
 var currentSymbol = "X";
@@ -34,11 +35,47 @@ if (form)
 fieldies.forEach(function (fieldy) {
     fieldy.addEventListener("click", handlePlayerMove);
 });
+fieldiesBot.forEach(function (fieldy) {
+    fieldy.addEventListener("click", handlePlayerMoveBot);
+});
 resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener("click", reset);
 restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListener("click", function () {
     if (confirm("Are you sure you want to restart?"))
         restart();
 });
+botStart === null || botStart === void 0 ? void 0 : botStart.addEventListener('click', startBotGame);
+function handlePlayerMoveBot(e) {
+    var target = e.target;
+    if (target.textContent === "") {
+        target.innerText = currentSymbol;
+        updateCombos(target);
+        currentSymbol = currentSymbol === "X" ? "O" : "X";
+        localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+        swapPlayers();
+        saveData();
+    }
+    else {
+        alert("This one is taken!");
+    }
+    botMove();
+}
+function botMove() {
+    if (!fieldiesBot[4].innerText) {
+        setTimeout(function () { handleBotMove(4); }, 700);
+    }
+}
+function handleBotMove(num) {
+    fieldiesBot[num].innerText = currentSymbol;
+    updateCombos(fieldiesBot[num]);
+    currentSymbol = currentSymbol === "X" ? "O" : "X";
+    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+    swapPlayers();
+    saveData();
+}
+function startBotGame() {
+    console.log('hi');
+    showField(gameDivBot);
+}
 (function checkSaves() {
     var currentSaveX = localStorage.getItem("playerX");
     if (currentSaveX) {
@@ -54,7 +91,7 @@ restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListe
     var name2 = localStorage.getItem("player2");
     if (name1 && name2) {
         setPlayers(name1, name2);
-        showField();
+        showField(gameDiv);
     }
     var savedActive = localStorage.getItem("activePlayer");
     if (savedActive)
@@ -149,7 +186,7 @@ function handleSubmit(e) {
     player2Name = (player2 === null || player2 === void 0 ? void 0 : player2.value) || "Player II";
     localStorage.setItem("player1", player1Name);
     localStorage.setItem("player2", player2Name);
-    showField();
+    showField(gameDiv);
     setPlayers(player1Name, player2Name);
 }
 function setPlayers(name1, name2) {
@@ -158,7 +195,7 @@ function setPlayers(name1, name2) {
         player2GameName.innerText = "PlayerO: ".concat(name2);
     }
 }
-function showField() {
+function showField(thumb) {
     menu === null || menu === void 0 ? void 0 : menu.classList.add("visually-hidden");
-    gameDiv === null || gameDiv === void 0 ? void 0 : gameDiv.classList.remove("visually-hidden");
+    thumb === null || thumb === void 0 ? void 0 : thumb.classList.remove("visually-hidden");
 }

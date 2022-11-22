@@ -1,8 +1,9 @@
-export const stuf = [];
+export {};
 
 const menu: HTMLElement | null = document.querySelector(".menu");
 const field: HTMLElement | null = document.querySelector(".field");
 const gameDiv = document.querySelector(".gameDiv");
+const gameDivBot = document.querySelector(".gameDivBot");
 const form: HTMLElement | null = document.querySelector(".form");
 const player1: HTMLInputElement | null = document.querySelector("#player1");
 const player2: HTMLInputElement | null = document.querySelector("#player2");
@@ -11,6 +12,7 @@ const player1GameName: HTMLElement | null =
 const player2GameName: HTMLElement | null =
   document.querySelector("#player2Name");
 const fieldies: NodeListOf<HTMLElement> = document.querySelectorAll(".fieldy");
+const fieldiesBot: NodeListOf<HTMLElement> = document.querySelectorAll(".fieldyBot");
 const winningCombos = [
   [1, 2, 3],
   [4, 5, 6],
@@ -23,6 +25,7 @@ const winningCombos = [
 ];
 const restartBtn = document.querySelector("#restartBtn");
 const resetBtn = document.querySelector("#resetBtn");
+const botStart = document.querySelector(".botButton");
 
 let currentComboX: number[] = [];
 let currentComboO: number[] = [];
@@ -35,10 +38,49 @@ if (form) form.addEventListener("submit", handleSubmit);
 fieldies.forEach((fieldy) => {
   fieldy.addEventListener("click", handlePlayerMove);
 });
+fieldiesBot.forEach((fieldy) => {
+  fieldy.addEventListener("click", handlePlayerMoveBot);
+});
 resetBtn?.addEventListener("click", reset);
 restartBtn?.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart?")) restart();
 });
+botStart?.addEventListener('click', startBotGame);
+
+function handlePlayerMoveBot(e: MouseEvent) {
+  const target = e.target as HTMLElement;
+  if (target.textContent === "") {
+    target.innerText = currentSymbol;
+    updateCombos(target);
+    currentSymbol = currentSymbol === "X" ? "O" : "X";
+    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+    swapPlayers();
+    saveData();
+  } else {
+    alert("This one is taken!");
+  }
+  botMove()
+}
+
+function botMove() {
+  if (!fieldiesBot[4].innerText) {
+    setTimeout(()=>{handleBotMove(4)}, 600)
+  }
+}
+
+function handleBotMove(num: number) {
+  fieldiesBot[num].innerText = currentSymbol;
+      updateCombos(fieldiesBot[num]);
+      currentSymbol = currentSymbol === "X" ? "O" : "X";
+      localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+      swapPlayers();
+      saveData();
+}
+
+function startBotGame() {
+  console.log('hi');
+  showField(gameDivBot);
+}
 
 (function checkSaves() {
   const currentSaveX = localStorage.getItem("playerX");
@@ -56,7 +98,7 @@ restartBtn?.addEventListener("click", () => {
   let name2 = localStorage.getItem("player2");
   if (name1 && name2) {
     setPlayers(name1, name2);
-    showField();
+    showField(gameDiv);
   }
 
   const savedActive = localStorage.getItem("activePlayer");
@@ -156,7 +198,7 @@ function handleSubmit(e: SubmitEvent) {
   player2Name = player2?.value || "Player II";
   localStorage.setItem("player1", player1Name);
   localStorage.setItem("player2", player2Name);
-  showField();
+  showField(gameDiv);
   setPlayers(player1Name, player2Name);
 }
 
@@ -167,7 +209,7 @@ function setPlayers(name1: string, name2: string) {
   }
 }
 
-function showField() {
+function showField(thumb: Element | null) {
   menu?.classList.add("visually-hidden");
-  gameDiv?.classList.remove("visually-hidden");
+  thumb?.classList.remove("visually-hidden");
 }

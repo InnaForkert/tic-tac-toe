@@ -60,7 +60,7 @@ body {
   box-shadow: 2px 8px 4px -6px #0000004d;
 }
 
-.gameDiv {
+.gameDiv, .gameDivBot {
   width: 100vw;
   height: 100vh;
   flex-direction: column;
@@ -70,10 +70,10 @@ body {
   display: flex;
 }
 
-.fieldy {
+.fieldy, .fieldyBot {
   width: 33.3333%;
   max-height: 317px;
-  height: 10vw;
+  height: 7vw;
   background-color: #c5c5c533;
   outline: 1px solid #0000005c;
   justify-content: center;
@@ -83,20 +83,20 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  .fieldy {
+  .fieldy, .fieldyBot {
     height: 20vw;
     font-size: 2rem;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .fieldy {
+  .fieldy, .fieldyBot {
     font-size: 7rem;
   }
 }
 
-.field {
-  width: 30vw;
+.field, .fieldBot {
+  width: 23vw;
   max-width: 950px;
   border: 1px solid #0000006a;
   border-radius: 4px;
@@ -108,7 +108,7 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  .field {
+  .field, .fieldBot {
     width: 60vw;
   }
 }

@@ -1,4 +1,4 @@
-.gameDiv {
+.gameDiv, .gameDivBot {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,14 +8,14 @@
   gap: 35px;
 }
 
-.fieldy {
+.fieldy, .fieldyBot {
   display: flex;
   align-items: center;
   justify-content: center;
   outline: 1px solid rgba(0, 0, 0, 0.359);
   width: calc(100% / 3);
   max-height: 317px;
-  height: 10vw;
+  height: 7vw;
   font-size: 3rem;
   background-color: rgba(197, 197, 197, 0.2);
   @media screen and (max-width: 480px) {
@@ -27,11 +27,11 @@
   }
 }
 
-.field {
+.field, .fieldBot {
   display: flex;
   flex-wrap: wrap;
   margin: 15px auto;
-  width: 30vw;
+  width: 23vw;
   max-width: 950px;
   border: 1px solid rgba(0, 0, 0, 0.416);
   transform: translateY(-45px);
