@@ -342,6 +342,7 @@ function reset() {
     localStorage.clear();
     currentComboO = [];
     currentComboX = [];
+    currentSymbol = "X";
     fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));
   } else {
     const placeholderName = localStorage.getItem("player1") || "Player II";
