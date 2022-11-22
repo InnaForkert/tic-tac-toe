@@ -131,37 +131,37 @@ function checkPossibleWin(arr) {
         if (arr.includes(2) && !fieldiesBot[2].innerText) {
             setTimeout(function () {
                 handleBotMove(2);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(3) && !fieldiesBot[1].innerText) {
             setTimeout(function () {
                 handleBotMove(1);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(4) && !fieldiesBot[6].innerText) {
             setTimeout(function () {
                 handleBotMove(6);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(7) && !fieldiesBot[3].innerText) {
             setTimeout(function () {
                 handleBotMove(3);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(5) && !fieldiesBot[8].innerText) {
             setTimeout(function () {
                 handleBotMove(8);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(9) && !fieldiesBot[4].innerText) {
             setTimeout(function () {
                 handleBotMove(4);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -169,19 +169,19 @@ function checkPossibleWin(arr) {
         if (arr.includes(3) && !fieldiesBot[0].innerText) {
             setTimeout(function () {
                 handleBotMove(0);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(5) && !fieldiesBot[7].innerText) {
             setTimeout(function () {
                 handleBotMove(7);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(8) && !fieldiesBot[4].innerText) {
             setTimeout(function () {
                 handleBotMove(4);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -189,25 +189,25 @@ function checkPossibleWin(arr) {
         if (arr.includes(6) && !fieldiesBot[8].innerText) {
             setTimeout(function () {
                 handleBotMove(8);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(9) && !fieldiesBot[5].innerText) {
             setTimeout(function () {
                 handleBotMove(5);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(5) && !fieldiesBot[6].innerText) {
             setTimeout(function () {
                 handleBotMove(6);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(7) && !fieldiesBot[4].innerText) {
             setTimeout(function () {
                 handleBotMove(4);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -215,19 +215,19 @@ function checkPossibleWin(arr) {
         if (arr.includes(5) && !fieldiesBot[5].innerText) {
             setTimeout(function () {
                 handleBotMove(5);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(6) && !fieldiesBot[4].innerText) {
             setTimeout(function () {
                 handleBotMove(4);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(7) && !fieldiesBot[0].innerText) {
             setTimeout(function () {
                 handleBotMove(0);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -235,25 +235,25 @@ function checkPossibleWin(arr) {
         if (arr.includes(6) && !fieldiesBot[3].innerText) {
             setTimeout(function () {
                 handleBotMove(3);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(8) && !fieldiesBot[1].innerText) {
             setTimeout(function () {
                 handleBotMove(1);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(9) && !fieldiesBot[0].innerText) {
             setTimeout(function () {
                 handleBotMove(0);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(7) && !fieldiesBot[2].innerText) {
             setTimeout(function () {
                 handleBotMove(2);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -261,7 +261,7 @@ function checkPossibleWin(arr) {
         if (arr.includes(9) && !fieldiesBot[2].innerText) {
             setTimeout(function () {
                 handleBotMove(2);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -269,13 +269,13 @@ function checkPossibleWin(arr) {
         if (arr.includes(8) && !fieldiesBot[8].innerText) {
             setTimeout(function () {
                 handleBotMove(8);
-            }, 600);
+            }, 300);
             return;
         }
         else if (arr.includes(9) && !fieldiesBot[7].innerText) {
             setTimeout(function () {
                 handleBotMove(7);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -283,7 +283,7 @@ function checkPossibleWin(arr) {
         if (arr.includes(9) && !fieldiesBot[6].innerText) {
             setTimeout(function () {
                 handleBotMove(6);
-            }, 600);
+            }, 300);
             return;
         }
     }
@@ -298,47 +298,47 @@ function buildCombo() {
     if (!fieldiesBot[4].innerText) {
         setTimeout(function () {
             handleBotMove(4);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[0].innerText) {
         setTimeout(function () {
             handleBotMove(0);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[2].innerText) {
         setTimeout(function () {
             handleBotMove(2);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[6].innerText) {
         setTimeout(function () {
             handleBotMove(6);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[8].innerText) {
         setTimeout(function () {
             handleBotMove(8);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[1].innerText) {
         setTimeout(function () {
             handleBotMove(1);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[3].innerText) {
         setTimeout(function () {
             handleBotMove(3);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[5].innerText) {
         setTimeout(function () {
             handleBotMove(5);
-        }, 600);
+        }, 300);
     }
     else if (!fieldiesBot[7].innerText) {
         setTimeout(function () {
             handleBotMove(7);
-        }, 600);
+        }, 300);
     }
 }
 function handleBotMove(num) {
