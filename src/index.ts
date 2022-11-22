@@ -385,6 +385,9 @@ function reset() {
 }
 
 function restart() {
+  if (isBotGame) {
+    currentSymbol = "X";
+  }
   localStorage.clear();
   location.reload();
 }
