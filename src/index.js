@@ -129,36 +129,54 @@ function handlePlayerMoveBot(e) {
 function checkPossibleWin(arr) {
     if (arr === null || arr === void 0 ? void 0 : arr.includes(1)) {
         if (arr.includes(2) && !fieldiesBot[2].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(2);
             }, 300);
             return;
         }
         if (arr.includes(3) && !fieldiesBot[1].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(1);
             }, 300);
             return;
         }
         if (arr.includes(4) && !fieldiesBot[6].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(6);
             }, 300);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[3].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(3);
             }, 300);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[8].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(8);
             }, 300);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[4].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(4);
             }, 300);
@@ -167,18 +185,27 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(2)) {
         if (arr.includes(3) && !fieldiesBot[0].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(0);
             }, 300);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[7].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(7);
             }, 300);
             return;
         }
         if (arr.includes(8) && !fieldiesBot[4].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(4);
             }, 300);
@@ -187,24 +214,36 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(3)) {
         if (arr.includes(6) && !fieldiesBot[8].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(8);
             }, 300);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[5].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(5);
             }, 300);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[6].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(6);
             }, 300);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[4].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(4);
             }, 300);
@@ -213,18 +252,27 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(4)) {
         if (arr.includes(5) && !fieldiesBot[5].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(5);
             }, 300);
             return;
         }
         if (arr.includes(6) && !fieldiesBot[4].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(4);
             }, 300);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[0].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(0);
             }, 300);
@@ -233,24 +281,36 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(5)) {
         if (arr.includes(6) && !fieldiesBot[3].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(3);
             }, 300);
             return;
         }
         if (arr.includes(8) && !fieldiesBot[1].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(1);
             }, 300);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[0].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(0);
             }, 300);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[2].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(2);
             }, 300);
@@ -259,6 +319,9 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(6)) {
         if (arr.includes(9) && !fieldiesBot[2].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(2);
             }, 300);
@@ -267,12 +330,18 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(7)) {
         if (arr.includes(8) && !fieldiesBot[8].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(8);
             }, 300);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[7].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(7);
             }, 300);
@@ -281,6 +350,9 @@ function checkPossibleWin(arr) {
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(8)) {
         if (arr.includes(9) && !fieldiesBot[6].innerText) {
+            fieldiesBot.forEach(function (fieldy) {
+                return fieldy.removeEventListener("click", handlePlayerMoveBot);
+            });
             setTimeout(function () {
                 handleBotMove(6);
             }, 300);
@@ -348,6 +420,9 @@ function handleBotMove(num) {
     localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
     swapPlayers();
     saveData();
+    fieldiesBot.forEach(function (fieldy) {
+        fieldy.addEventListener("click", handlePlayerMoveBot);
+    });
 }
 function startBotGame() {
     isBotGame = true;
@@ -357,6 +432,7 @@ function startBotGame() {
 }
 //common
 function reset() {
+    console.log(isBotGame);
     if (isBotGame) {
         localStorage.clear();
         currentComboO = [];
