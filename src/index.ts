@@ -12,7 +12,8 @@ const player1GameName: HTMLElement | null =
 const player2GameName: HTMLElement | null =
   document.querySelector("#player2Name");
 const fieldies: NodeListOf<HTMLElement> = document.querySelectorAll(".fieldy");
-const fieldiesBot: NodeListOf<HTMLElement> = document.querySelectorAll(".fieldyBot");
+const fieldiesBot: NodeListOf<HTMLElement> =
+  document.querySelectorAll(".fieldyBot");
 const winningCombos = [
   [1, 2, 3],
   [4, 5, 6],
@@ -45,7 +46,7 @@ resetBtn?.addEventListener("click", reset);
 restartBtn?.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart?")) restart();
 });
-botStart?.addEventListener('click', startBotGame);
+botStart?.addEventListener("click", startBotGame);
 
 function handlePlayerMoveBot(e: MouseEvent) {
   const target = e.target as HTMLElement;
@@ -59,26 +60,168 @@ function handlePlayerMoveBot(e: MouseEvent) {
   } else {
     alert("This one is taken!");
   }
-  botMove()
+  console.log(1);
+  checkPossibleWin(currentComboO);
+  if (currentSymbol === "O") {
+    console.log(2);
+    // checkPossibleWin(currentComboX);
+  }
+  if (currentSymbol === "O") {
+    console.log(3);
+    // buildCombo();
+  }
 }
 
-function botMove() {
+function checkPossibleWin(arr: number[] | undefined) {
+  if (arr?.includes(1)) {
+    if (arr.includes(2) && !fieldiesBot[3].innerText) {
+      setTimeout(() => {
+        handleBotMove(3);
+      }, 600);
+    } else if (arr.includes(3) && !fieldiesBot[2].innerText) {
+      setTimeout(() => {
+        handleBotMove(2);
+      }, 600);
+    } else if (arr.includes(4) && !fieldiesBot[7].innerText) {
+      setTimeout(() => {
+        handleBotMove(7);
+      }, 600);
+    } else if (arr.includes(7) && !fieldiesBot[4].innerText) {
+      setTimeout(() => {
+        handleBotMove(4);
+      }, 600);
+    } else if (arr.includes(5) && !fieldiesBot[9].innerText) {
+      setTimeout(() => {
+        handleBotMove(9);
+      }, 600);
+    } else if (arr.includes(9) && !fieldiesBot[5].innerText) {
+      setTimeout(() => {
+        handleBotMove(5);
+      }, 600);
+    }
+  } else if (arr?.includes(2)) {
+    if (arr.includes(3) && !fieldiesBot[1].innerText) {
+      setTimeout(() => {
+        handleBotMove(1);
+      }, 600);
+    } else if (arr.includes(5) && !fieldiesBot[8].innerText) {
+      setTimeout(() => {
+        handleBotMove(8);
+      }, 600);
+    } else if (arr.includes(8) && !fieldiesBot[5].innerText) {
+      setTimeout(() => {
+        handleBotMove(5);
+      }, 600);
+    }
+  } else if (arr?.includes(3)) {
+    if (arr.includes(6) && !fieldiesBot[9].innerText) {
+      setTimeout(() => {
+        handleBotMove(9);
+      }, 600);
+    } else if (arr.includes(9) && !fieldiesBot[6].innerText) {
+      setTimeout(() => {
+        handleBotMove(6);
+      }, 600);
+    } else if (arr.includes(5) && !fieldiesBot[7].innerText) {
+      setTimeout(() => {
+        handleBotMove(7);
+      }, 600);
+    } else if (arr.includes(7) && !fieldiesBot[5].innerText) {
+      setTimeout(() => {
+        handleBotMove(5);
+      }, 600);
+    }
+  } else if (arr?.includes(4)) {
+    if (arr.includes(5) && !fieldiesBot[6].innerText) {
+      setTimeout(() => {
+        handleBotMove(6);
+      }, 600);
+    } else if (arr.includes(6) && !fieldiesBot[5].innerText) {
+      setTimeout(() => {
+        handleBotMove(5);
+      }, 600);
+    } else if (arr.includes(7) && !fieldiesBot[1].innerText) {
+      setTimeout(() => {
+        handleBotMove(1);
+      }, 600);
+    }
+  } else if (arr?.includes(5)) {
+    if (arr.includes(6) && !fieldiesBot[4].innerText) {
+      setTimeout(() => {
+        handleBotMove(4);
+      }, 600);
+    } else if (arr.includes(8) && !fieldiesBot[2].innerText) {
+      setTimeout(() => {
+        handleBotMove(2);
+      }, 600);
+    } else if (arr.includes(9) && !fieldiesBot[1].innerText) {
+      setTimeout(() => {
+        handleBotMove(1);
+      }, 600);
+    } else if (arr.includes(7) && !fieldiesBot[3].innerText) {
+      setTimeout(() => {
+        handleBotMove(3);
+      }, 600);
+    }
+  } else if (arr?.includes(6)) {
+    if (arr.includes(9) && !fieldiesBot[3].innerText) {
+      setTimeout(() => {
+        handleBotMove(3);
+      }, 600);
+    }
+  } else if (arr?.includes(7)) {
+    if (arr.includes(8) && !fieldiesBot[9].innerText) {
+      setTimeout(() => {
+        handleBotMove(9);
+      }, 600);
+    } else if (arr.includes(9) && !fieldiesBot[8].innerText) {
+      setTimeout(() => {
+        handleBotMove(8);
+      }, 600);
+    }
+  } else if (arr?.includes(8)) {
+    if (arr.includes(9) && !fieldiesBot[7].innerText) {
+      setTimeout(() => {
+        handleBotMove(7);
+      }, 600);
+    }
+  }
+}
+
+function buildCombo() {
   if (!fieldiesBot[4].innerText) {
-    setTimeout(()=>{handleBotMove(4)}, 600)
+    setTimeout(() => {
+      handleBotMove(4);
+    }, 600);
+  } else if (!fieldiesBot[0].innerText) {
+    setTimeout(() => {
+      handleBotMove(0);
+    }, 600);
+  } else if (!fieldiesBot[2].innerText) {
+    setTimeout(() => {
+      handleBotMove(2);
+    }, 600);
+  } else if (!fieldiesBot[6].innerText) {
+    setTimeout(() => {
+      handleBotMove(6);
+    }, 600);
+  } else if (!fieldiesBot[8].innerText) {
+    setTimeout(() => {
+      handleBotMove(8);
+    }, 600);
   }
 }
 
 function handleBotMove(num: number) {
   fieldiesBot[num].innerText = currentSymbol;
-      updateCombos(fieldiesBot[num]);
-      currentSymbol = currentSymbol === "X" ? "O" : "X";
-      localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-      swapPlayers();
-      saveData();
+  updateCombos(fieldiesBot[num]);
+  currentSymbol = currentSymbol === "X" ? "O" : "X";
+  localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+  swapPlayers();
+  saveData();
 }
 
 function startBotGame() {
-  console.log('hi');
   showField(gameDivBot);
 }
 
