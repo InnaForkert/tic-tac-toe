@@ -1,7 +1,6 @@
 export {};
 
 const menu: HTMLElement | null = document.querySelector(".menu");
-const field: HTMLElement | null = document.querySelector(".field");
 const gameDiv = document.querySelector(".gameDiv");
 const gameDivBot = document.querySelector(".gameDivBot");
 const form: HTMLElement | null = document.querySelector(".form");
@@ -25,15 +24,18 @@ const winningCombos = [
   [3, 5, 7],
 ];
 const restartBtn = document.querySelector("#restartBtn");
+const restartBtnBot = document.querySelector("#restartBtnBot");
 const resetBtn = document.querySelector("#resetBtn");
+const resetBtnBot = document.querySelector("#resetBtnBot");
 const botStart = document.querySelector(".botButton");
 
 let currentComboX: number[] = [];
 let currentComboO: number[] = [];
 let currentSymbol: string = "X";
 let activePlayer: string = "";
-let player1Name: string;
-let player2Name: string;
+let player1Name: string = "Player I";
+let player2Name: string = "Player II";
+let isBotGame: boolean;
 
 if (form) form.addEventListener("submit", handleSubmit);
 fieldies.forEach((fieldy) => {
@@ -43,12 +45,18 @@ fieldiesBot.forEach((fieldy) => {
   fieldy.addEventListener("click", handlePlayerMoveBot);
 });
 resetBtn?.addEventListener("click", reset);
+resetBtnBot?.addEventListener("click", reset);
 restartBtn?.addEventListener("click", () => {
+  if (confirm("Are you sure you want to restart?")) restart();
+});
+restartBtnBot?.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart?")) restart();
 });
 botStart?.addEventListener("click", startBotGame);
 
-function handlePlayerMoveBot(e: MouseEvent) {
+// player vs player
+
+function handlePlayerMove(e: MouseEvent) {
   const target = e.target as HTMLElement;
   if (target.textContent === "") {
     target.innerText = currentSymbol;
@@ -60,7 +68,72 @@ function handlePlayerMoveBot(e: MouseEvent) {
   } else {
     alert("This one is taken!");
   }
-  checkPossibleWin(currentComboO);
+}
+
+function handleSubmit(e: SubmitEvent) {
+  e.preventDefault();
+  isBotGame = false;
+  player1Name = player1?.value || "Player I";
+  player2Name = player2?.value || "Player II";
+  localStorage.setItem("player1", player1Name);
+  localStorage.setItem("player2", player2Name);
+  showField(gameDiv);
+  setPlayers(player1Name, player2Name);
+}
+
+function setPlayers(name1: string, name2: string) {
+  if (player1GameName && player2GameName) {
+    player1GameName.innerText = `PlayerX: ${name1}`;
+    player2GameName.innerText = `PlayerO: ${name2}`;
+  }
+}
+
+function paintSaved(N: string, arr: number[]) {
+  fieldies.forEach((fieldy) => {
+    if (fieldy.dataset.id && arr.includes(+fieldy.dataset.id)) {
+      fieldy.innerText = N;
+    }
+  });
+}
+
+(function checkSaves() {
+  const currentSaveX = localStorage.getItem("playerX");
+  if (currentSaveX) {
+    currentComboX = JSON.parse(currentSaveX);
+    paintSaved("X", currentComboX);
+  }
+  const currentSaveO = localStorage.getItem("playerO");
+  if (currentSaveO) {
+    currentComboO = JSON.parse(currentSaveO);
+    paintSaved("O", currentComboO);
+  }
+
+  let name1 = localStorage.getItem("player1");
+  let name2 = localStorage.getItem("player2");
+  if (name1 && name2) {
+    setPlayers(name1, name2);
+    showField(gameDiv);
+  }
+
+  const savedActive = localStorage.getItem("activePlayer");
+  if (savedActive) currentSymbol = JSON.parse(savedActive);
+})();
+
+//player vs bot
+
+function handlePlayerMoveBot(e: MouseEvent) {
+  const target = e.target as HTMLElement;
+  if (target.textContent === "") {
+    target.innerText = currentSymbol;
+    updateCombos(target);
+    currentSymbol = currentSymbol === "X" ? "O" : "X";
+    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+    swapPlayers();
+    saveData();
+    checkPossibleWin(currentComboO);
+  } else {
+    alert("This one is taken!");
+  }
 }
 
 function checkPossibleWin(arr: number[] | undefined) {
@@ -233,7 +306,6 @@ function buildCombo() {
 }
 
 function handleBotMove(num: number) {
-  console.log(num);
   fieldiesBot[num].innerText = currentSymbol;
   updateCombos(fieldiesBot[num]);
   currentSymbol = currentSymbol === "X" ? "O" : "X";
@@ -243,57 +315,36 @@ function handleBotMove(num: number) {
 }
 
 function startBotGame() {
+  isBotGame = true;
   showField(gameDivBot);
 }
 
-(function checkSaves() {
-  const currentSaveX = localStorage.getItem("playerX");
-  if (currentSaveX) {
-    currentComboX = JSON.parse(currentSaveX);
-    paintSaved("X", currentComboX);
-  }
-  const currentSaveO = localStorage.getItem("playerO");
-  if (currentSaveO) {
-    currentComboO = JSON.parse(currentSaveO);
-    paintSaved("O", currentComboO);
-  }
-
-  let name1 = localStorage.getItem("player1");
-  let name2 = localStorage.getItem("player2");
-  if (name1 && name2) {
-    setPlayers(name1, name2);
-    showField(gameDiv);
-  }
-
-  const savedActive = localStorage.getItem("activePlayer");
-  if (savedActive) currentSymbol = JSON.parse(savedActive);
-})();
+//common
 
 function reset() {
-  const placeholderName = localStorage.getItem("player1") || "Player II";
-  player1Name = localStorage.getItem("player2") || "Player I";
-  player2Name = placeholderName || "Player II";
+  if (isBotGame) {
+    localStorage.clear();
+    currentComboO = [];
+    currentComboX = [];
+    fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));
+  } else {
+    const placeholderName = localStorage.getItem("player1") || "Player II";
+    player1Name = localStorage.getItem("player2") || "Player I";
+    player2Name = placeholderName || "Player II";
 
-  localStorage.removeItem("playerX");
-  localStorage.removeItem("playerO");
-  localStorage.removeItem("activePlayer");
+    localStorage.removeItem("playerX");
+    localStorage.removeItem("playerO");
+    localStorage.removeItem("activePlayer");
 
-  localStorage.setItem("player1", player1Name);
-  localStorage.setItem("player2", player2Name);
-  location.reload();
+    localStorage.setItem("player1", player1Name);
+    localStorage.setItem("player2", player2Name);
+    location.reload();
+  }
 }
 
 function restart() {
   localStorage.clear();
   location.reload();
-}
-
-function paintSaved(N: string, arr: number[]) {
-  fieldies.forEach((fieldy) => {
-    if (fieldy.dataset.id && arr.includes(+fieldy.dataset.id)) {
-      fieldy.innerText = N;
-    }
-  });
 }
 
 function saveData() {
@@ -306,9 +357,15 @@ function checkForVictory(arr: number[]) {
     combo.every((num) => arr.includes(num))
   );
   if (victory) {
-    const wantsMore = confirm("Victory! One more round?");
-    if (wantsMore) reset();
-    else restart();
+    if (isBotGame && currentSymbol === "X") {
+      const wantsMore = confirm("You lose! Want a revenge?");
+      if (wantsMore) reset();
+      else restart();
+    } else {
+      const wantsMore = confirm("Victory! Another round?");
+      if (wantsMore) reset();
+      else restart();
+    }
   } else checkForNoMoves();
 }
 
@@ -320,29 +377,15 @@ function checkForNoMoves() {
   }
 }
 
-function handlePlayerMove(e: MouseEvent) {
-  const target = e.target as HTMLElement;
-  if (target.textContent === "") {
-    target.innerText = currentSymbol;
-    updateCombos(target);
-    currentSymbol = currentSymbol === "X" ? "O" : "X";
-    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-    swapPlayers();
-    saveData();
-  } else {
-    alert("This one is taken!");
-  }
-}
-
 function updateCombos(target: HTMLElement) {
   if (currentSymbol === "X") {
     currentComboX.push(Number(target.dataset.id));
     if (currentComboX.length > 2)
-      setTimeout(() => checkForVictory(currentComboX), 0);
+      setTimeout(() => checkForVictory(currentComboX), 10);
   } else {
     currentComboO.push(Number(target.dataset.id));
     if (currentComboO.length > 2)
-      setTimeout(() => checkForVictory(currentComboO), 0);
+      setTimeout(() => checkForVictory(currentComboO), 10);
   }
 }
 
@@ -354,23 +397,6 @@ function swapPlayers() {
   }
   player1GameName?.classList.toggle("active-player");
   player2GameName?.classList.toggle("active-player");
-}
-
-function handleSubmit(e: SubmitEvent) {
-  e.preventDefault();
-  player1Name = player1?.value || "Player I";
-  player2Name = player2?.value || "Player II";
-  localStorage.setItem("player1", player1Name);
-  localStorage.setItem("player2", player2Name);
-  showField(gameDiv);
-  setPlayers(player1Name, player2Name);
-}
-
-function setPlayers(name1: string, name2: string) {
-  if (player1GameName && player2GameName) {
-    player1GameName.innerText = `PlayerX: ${name1}`;
-    player2GameName.innerText = `PlayerO: ${name2}`;
-  }
 }
 
 function showField(thumb: Element | null) {
