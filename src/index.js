@@ -359,6 +359,7 @@ function reset() {
         localStorage.clear();
         currentComboO = [];
         currentComboX = [];
+        currentSymbol = "X";
         fieldiesBot.forEach(function (fieldy) { return (fieldy.innerHTML = ""); });
     }
     else {
