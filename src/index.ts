@@ -433,16 +433,15 @@ function startBotGame() {
   currentComboO = [];
   currentComboX = [];
   showField(gameDivBot);
+  setTimeout(() => fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = "")), 1);
 }
 
 //common
 
 function reset() {
-  console.log(isBotGame);
   if (isBotGame) {
     localStorage.clear();
-    currentComboO = [];
-    currentComboX = [];
+    startBotGame();
     currentSymbol = "X";
     fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));
   } else {
