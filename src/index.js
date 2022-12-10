@@ -85,12 +85,12 @@ function updateCombos(target) {
     if (currentSymbol === "X") {
         currentComboX.push(Number(target.dataset.id));
         if (currentComboX.length > 2)
-            setTimeout(function () { return checkForVictory(currentComboX); }, 10);
+            checkForVictory(currentComboX);
     }
     else {
         currentComboO.push(Number(target.dataset.id));
         if (currentComboO.length > 2)
-            setTimeout(function () { return checkForVictory(currentComboO); }, 10);
+            checkForVictory(currentComboO);
     }
 }
 function checkForVictory(arr) {
@@ -98,16 +98,7 @@ function checkForVictory(arr) {
         return combo.every(function (num) { return arr.includes(num); });
     });
     if (victory) {
-        if (isBotGame && currentSymbol === "X") {
-            var wantsMore = confirm("You lose! Want a revenge?");
-            if (wantsMore)
-                reset();
-            else
-                restart();
-        }
-        else {
-            alertVictory();
-        }
+        alertVictory();
     }
     else
         checkForNoMoves();
@@ -189,28 +180,35 @@ function handlePlayerMoveBot(e) {
         paintSymbol(target);
         updateCombos(target);
         changeSymbol();
-        botMove();
+        console.log(victory);
+        if (!victory)
+            botMove();
     }
     else {
         alert("This one is taken!");
     }
 }
 function botMove() {
-    var didntMakeAMove = checkPossibleWin(currentComboO);
-    if (didntMakeAMove) {
+    var didntMakeAMove = true;
+    if (!victory && didntMakeAMove) {
+        didntMakeAMove = checkPossibleWin(currentComboO);
+    }
+    if (didntMakeAMove && !victory) {
         didntMakeAMove = checkPossibleWin(currentComboX);
     }
-    if (didntMakeAMove) {
+    if (didntMakeAMove && !victory) {
         buildCombo();
     }
 }
 function handleBotMove(num) {
-    paintSymbol(fieldiesBot[num]);
     updateCombos(fieldiesBot[num]);
-    currentSymbol = currentSymbol === "X" ? "O" : "X";
-    fieldiesBot.forEach(function (fieldy) {
-        fieldy.addEventListener("click", handlePlayerMoveBot);
-    });
+    setTimeout(function () {
+        paintSymbol(fieldiesBot[num]);
+        currentSymbol = currentSymbol === "X" ? "O" : "X";
+        fieldiesBot.forEach(function (fieldy) {
+            fieldy.addEventListener("click", handlePlayerMoveBot);
+        });
+    }, 300);
 }
 //common
 function reset() {
@@ -239,51 +237,29 @@ function restart() {
 }
 //bot move logic
 function buildCombo() {
-    if (!fieldiesBot[4].innerText) {
-        setTimeout(function () {
-            handleBotMove(4);
-        }, 300);
-    }
-    else if (!fieldiesBot[0].innerText) {
-        setTimeout(function () {
-            handleBotMove(0);
-        }, 300);
-    }
-    else if (!fieldiesBot[2].innerText) {
-        setTimeout(function () {
-            handleBotMove(2);
-        }, 300);
-    }
-    else if (!fieldiesBot[6].innerText) {
-        setTimeout(function () {
-            handleBotMove(6);
-        }, 300);
-    }
-    else if (!fieldiesBot[8].innerText) {
-        setTimeout(function () {
-            handleBotMove(8);
-        }, 300);
-    }
-    else if (!fieldiesBot[1].innerText) {
-        setTimeout(function () {
-            handleBotMove(1);
-        }, 300);
-    }
-    else if (!fieldiesBot[3].innerText) {
-        setTimeout(function () {
-            handleBotMove(3);
-        }, 300);
-    }
-    else if (!fieldiesBot[5].innerText) {
-        setTimeout(function () {
-            handleBotMove(5);
-        }, 300);
-    }
-    else if (!fieldiesBot[7].innerText) {
-        setTimeout(function () {
-            handleBotMove(7);
-        }, 300);
-    }
+    var comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
+    var num = comboArray.find(function (num) { return !fieldiesBot[num].innerText; });
+    // if (!fieldiesBot[4].innerText) {
+    //   num = 4;
+    // } else if (!fieldiesBot[0].innerText) {
+    //   handleBotMove(0);
+    // } else if (!fieldiesBot[2].innerText) {
+    //   handleBotMove(2);
+    // } else if (!fieldiesBot[6].innerText) {
+    //   handleBotMove(6);
+    // } else if (!fieldiesBot[8].innerText) {
+    //   handleBotMove(8);
+    // } else if (!fieldiesBot[1].innerText) {
+    //   handleBotMove(1);
+    // } else if (!fieldiesBot[3].innerText) {
+    //   handleBotMove(3);
+    // } else if (!fieldiesBot[5].innerText) {
+    //   handleBotMove(5);
+    // } else if (!fieldiesBot[7].innerText) {
+    //   handleBotMove(7);
+    // }
+    if (num)
+        handleBotMove(num);
 }
 function stopListening() {
     fieldiesBot.forEach(function (fieldy) {
@@ -294,184 +270,136 @@ function checkPossibleWin(arr) {
     if (arr === null || arr === void 0 ? void 0 : arr.includes(1)) {
         if (arr.includes(2) && !fieldiesBot[2].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(2);
-            }, 300);
+            handleBotMove(2);
             return;
         }
         if (arr.includes(3) && !fieldiesBot[1].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(1);
-            }, 300);
+            handleBotMove(1);
             return;
         }
         if (arr.includes(4) && !fieldiesBot[6].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(6);
-            }, 300);
+            handleBotMove(6);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[3].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(3);
-            }, 300);
+            handleBotMove(3);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[8].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(8);
-            }, 300);
+            handleBotMove(8);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[4].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(4);
-            }, 300);
+            handleBotMove(4);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(2)) {
         if (arr.includes(3) && !fieldiesBot[0].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(0);
-            }, 300);
+            handleBotMove(0);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[7].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(7);
-            }, 300);
+            handleBotMove(7);
             return;
         }
         if (arr.includes(8) && !fieldiesBot[4].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(4);
-            }, 300);
+            handleBotMove(4);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(3)) {
         if (arr.includes(6) && !fieldiesBot[8].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(8);
-            }, 300);
+            handleBotMove(8);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[5].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(5);
-            }, 300);
+            handleBotMove(5);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[6].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(6);
-            }, 300);
+            handleBotMove(6);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[4].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(4);
-            }, 300);
+            handleBotMove(4);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(4)) {
         if (arr.includes(5) && !fieldiesBot[5].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(5);
-            }, 300);
+            handleBotMove(5);
             return;
         }
         if (arr.includes(6) && !fieldiesBot[4].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(4);
-            }, 300);
+            handleBotMove(4);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[0].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(0);
-            }, 300);
+            handleBotMove(0);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(5)) {
         if (arr.includes(6) && !fieldiesBot[3].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(3);
-            }, 300);
+            handleBotMove(3);
             return;
         }
         if (arr.includes(8) && !fieldiesBot[1].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(1);
-            }, 300);
+            handleBotMove(1);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[0].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(0);
-            }, 300);
+            handleBotMove(0);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[2].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(2);
-            }, 300);
+            handleBotMove(2);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(6)) {
         if (arr.includes(9) && !fieldiesBot[2].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(2);
-            }, 300);
+            handleBotMove(2);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(7)) {
         if (arr.includes(8) && !fieldiesBot[8].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(8);
-            }, 300);
+            handleBotMove(8);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[7].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(7);
-            }, 300);
+            handleBotMove(7);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(8)) {
         if (arr.includes(9) && !fieldiesBot[6].innerText) {
             stopListening();
-            setTimeout(function () {
-                handleBotMove(6);
-            }, 300);
+            handleBotMove(6);
             return;
         }
     }
