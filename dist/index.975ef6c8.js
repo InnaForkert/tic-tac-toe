@@ -724,12 +724,24 @@ function clearCombos() {
 function handlePlayerMoveBot(e) {
     var target = e.target;
     if (target.textContent === "") {
+        stopListening();
         paintSymbol(target);
         updateCombos(target);
-        changeSymbol();
-        console.log(victory);
-        if (!victory) botMove();
+        if (!victory) {
+            currentSymbol = currentSymbol === "X" ? "O" : "X";
+            if (currentSymbol === "O") botMove();
+        }
     } else alert("This one is taken!");
+}
+function stopListening() {
+    fieldiesBot.forEach(function(fieldy) {
+        return fieldy.removeEventListener("click", handlePlayerMoveBot);
+    });
+}
+function startListening() {
+    fieldiesBot.forEach(function(fieldy) {
+        fieldy.addEventListener("click", handlePlayerMoveBot);
+    });
 }
 function botMove() {
     var didntMakeAMove = true;
@@ -742,10 +754,8 @@ function handleBotMove(num) {
     setTimeout(function() {
         paintSymbol(fieldiesBot[num]);
         currentSymbol = currentSymbol === "X" ? "O" : "X";
-        fieldiesBot.forEach(function(fieldy) {
-            fieldy.addEventListener("click", handlePlayerMoveBot);
-        });
-    }, 300);
+        startListening();
+    }, 400);
 }
 //common
 function reset() {
@@ -753,10 +763,13 @@ function reset() {
         localStorage.clear();
         clearCombos();
         currentSymbol = "X";
-        fieldiesBot.forEach(function(fieldy) {
-            return fieldy.innerHTML = "";
-        });
-        victory = false;
+        setTimeout(function() {
+            fieldiesBot.forEach(function(fieldy) {
+                return fieldy.innerHTML = "";
+            });
+            victory = false;
+            startListening();
+        }, 0);
     } else {
         var placeholderName = localStorage.getItem("player1") || "Player II";
         player1Name = localStorage.getItem("player2") || "Player I";
@@ -789,165 +802,117 @@ function buildCombo() {
     var num = comboArray.find(function(num) {
         return !fieldiesBot[num].innerText;
     });
-    // if (!fieldiesBot[4].innerText) {
-    //   num = 4;
-    // } else if (!fieldiesBot[0].innerText) {
-    //   handleBotMove(0);
-    // } else if (!fieldiesBot[2].innerText) {
-    //   handleBotMove(2);
-    // } else if (!fieldiesBot[6].innerText) {
-    //   handleBotMove(6);
-    // } else if (!fieldiesBot[8].innerText) {
-    //   handleBotMove(8);
-    // } else if (!fieldiesBot[1].innerText) {
-    //   handleBotMove(1);
-    // } else if (!fieldiesBot[3].innerText) {
-    //   handleBotMove(3);
-    // } else if (!fieldiesBot[5].innerText) {
-    //   handleBotMove(5);
-    // } else if (!fieldiesBot[7].innerText) {
-    //   handleBotMove(7);
-    // }
     if (num) handleBotMove(num);
-}
-function stopListening() {
-    fieldiesBot.forEach(function(fieldy) {
-        return fieldy.removeEventListener("click", handlePlayerMoveBot);
-    });
 }
 function checkPossibleWin(arr) {
     if (arr === null || arr === void 0 ? void 0 : arr.includes(1)) {
         if (arr.includes(2) && !fieldiesBot[2].innerText) {
-            stopListening();
             handleBotMove(2);
             return;
         }
         if (arr.includes(3) && !fieldiesBot[1].innerText) {
-            stopListening();
             handleBotMove(1);
             return;
         }
         if (arr.includes(4) && !fieldiesBot[6].innerText) {
-            stopListening();
             handleBotMove(6);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[3].innerText) {
-            stopListening();
             handleBotMove(3);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[8].innerText) {
-            stopListening();
             handleBotMove(8);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[4].innerText) {
-            stopListening();
             handleBotMove(4);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(2)) {
         if (arr.includes(3) && !fieldiesBot[0].innerText) {
-            stopListening();
             handleBotMove(0);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[7].innerText) {
-            stopListening();
             handleBotMove(7);
             return;
         }
         if (arr.includes(8) && !fieldiesBot[4].innerText) {
-            stopListening();
             handleBotMove(4);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(3)) {
         if (arr.includes(6) && !fieldiesBot[8].innerText) {
-            stopListening();
             handleBotMove(8);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[5].innerText) {
-            stopListening();
             handleBotMove(5);
             return;
         }
         if (arr.includes(5) && !fieldiesBot[6].innerText) {
-            stopListening();
             handleBotMove(6);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[4].innerText) {
-            stopListening();
             handleBotMove(4);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(4)) {
         if (arr.includes(5) && !fieldiesBot[5].innerText) {
-            stopListening();
             handleBotMove(5);
             return;
         }
         if (arr.includes(6) && !fieldiesBot[4].innerText) {
-            stopListening();
             handleBotMove(4);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[0].innerText) {
-            stopListening();
             handleBotMove(0);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(5)) {
         if (arr.includes(6) && !fieldiesBot[3].innerText) {
-            stopListening();
             handleBotMove(3);
             return;
         }
         if (arr.includes(8) && !fieldiesBot[1].innerText) {
-            stopListening();
             handleBotMove(1);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[0].innerText) {
-            stopListening();
             handleBotMove(0);
             return;
         }
         if (arr.includes(7) && !fieldiesBot[2].innerText) {
-            stopListening();
             handleBotMove(2);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(6)) {
         if (arr.includes(9) && !fieldiesBot[2].innerText) {
-            stopListening();
             handleBotMove(2);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(7)) {
         if (arr.includes(8) && !fieldiesBot[8].innerText) {
-            stopListening();
             handleBotMove(8);
             return;
         }
         if (arr.includes(9) && !fieldiesBot[7].innerText) {
-            stopListening();
             handleBotMove(7);
             return;
         }
     }
     if (arr === null || arr === void 0 ? void 0 : arr.includes(8)) {
         if (arr.includes(9) && !fieldiesBot[6].innerText) {
-            stopListening();
             handleBotMove(6);
             return;
         }
