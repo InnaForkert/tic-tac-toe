@@ -1,18 +1,23 @@
-export {};
+import { refs } from "./scripts/refs";
 
-const menu: HTMLElement | null = document.querySelector(".menu");
-const gameDiv = document.querySelector(".gameDiv");
-const gameDivBot = document.querySelector(".gameDivBot");
-const form: HTMLElement | null = document.querySelector(".form");
-const player1: HTMLInputElement | null = document.querySelector("#player1");
-const player2: HTMLInputElement | null = document.querySelector("#player2");
-const player1GameName: HTMLElement | null =
-  document.querySelector("#player1Name");
-const player2GameName: HTMLElement | null =
-  document.querySelector("#player2Name");
-const fieldies: NodeListOf<HTMLElement> = document.querySelectorAll(".fieldy");
-const fieldiesBot: NodeListOf<HTMLElement> =
-  document.querySelectorAll(".fieldyBot");
+const {
+  menu,
+  gameDiv,
+  gameDivBot,
+  form,
+  player1,
+  player2,
+  player1GameName,
+  player2GameName,
+  fieldies,
+  fieldiesBot,
+  restartBtn,
+  restartBtnBot,
+  resetBtn,
+  resetBtnBot,
+  botStart,
+} = refs;
+
 const winningCombos = [
   [1, 2, 3],
   [4, 5, 6],
@@ -23,11 +28,6 @@ const winningCombos = [
   [1, 5, 9],
   [3, 5, 7],
 ];
-const restartBtn = document.querySelector("#restartBtn");
-const restartBtnBot = document.querySelector("#restartBtnBot");
-const resetBtn = document.querySelector("#resetBtn");
-const resetBtnBot = document.querySelector("#resetBtnBot");
-const botStart = document.querySelector(".botButton");
 
 let currentComboX: number[] = [];
 let currentComboO: number[] = [];
@@ -36,49 +36,50 @@ let activePlayer: string = "";
 let player1Name: string = "Player I";
 let player2Name: string = "Player II";
 let isBotGame: boolean;
+let victory = false;
 
 if (form) form.addEventListener("submit", handleSubmit);
+botStart?.addEventListener("click", startBotGame);
+
 fieldies.forEach((fieldy) => {
   fieldy.addEventListener("click", handlePlayerMove);
 });
 fieldiesBot.forEach((fieldy) => {
   fieldy.addEventListener("click", handlePlayerMoveBot);
 });
+
 resetBtn?.addEventListener("click", reset);
 resetBtnBot?.addEventListener("click", reset);
+
 restartBtn?.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart?")) restart();
 });
 restartBtnBot?.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart?")) restart();
 });
-botStart?.addEventListener("click", startBotGame);
 
 // player vs player
 
-function handlePlayerMove(e: MouseEvent) {
-  const target = e.target as HTMLElement;
-  if (target.textContent === "") {
-    target.innerText = currentSymbol;
-    updateCombos(target);
-    currentSymbol = currentSymbol === "X" ? "O" : "X";
-    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-    swapPlayers();
-    saveData();
-  } else {
-    alert("This one is taken!");
-  }
-}
+// game start
 
 function handleSubmit(e: SubmitEvent) {
   e.preventDefault();
   isBotGame = false;
+  setNames();
+  showField(gameDiv);
+  setPlayers(player1Name, player2Name);
+}
+
+function setNames() {
   player1Name = player1?.value || "Player I";
   player2Name = player2?.value || "Player II";
   localStorage.setItem("player1", player1Name);
   localStorage.setItem("player2", player2Name);
-  showField(gameDiv);
-  setPlayers(player1Name, player2Name);
+}
+
+function showField(thumb: Element | null) {
+  menu?.classList.add("visually-hidden");
+  thumb?.classList.remove("visually-hidden");
 }
 
 function setPlayers(name1: string, name2: string) {
@@ -88,13 +89,87 @@ function setPlayers(name1: string, name2: string) {
   }
 }
 
-function paintSaved(N: string, arr: number[]) {
-  fieldies.forEach((fieldy) => {
-    if (fieldy.dataset.id && arr.includes(+fieldy.dataset.id)) {
-      fieldy.innerText = N;
-    }
-  });
+//player makes a move
+
+function handlePlayerMove(e: MouseEvent) {
+  const target = e.target as HTMLElement;
+  if (target.textContent === "") {
+    paintSymbol(target);
+    updateCombos(target);
+    changeSymbol();
+    swapPlayers();
+    saveData();
+  } else {
+    alert("This one is taken!");
+  }
 }
+
+function paintSymbol(div: HTMLElement) {
+  div.innerText = currentSymbol;
+}
+
+function updateCombos(target: HTMLElement) {
+  if (currentSymbol === "X") {
+    currentComboX.push(Number(target.dataset.id));
+    if (currentComboX.length > 2)
+      setTimeout(() => checkForVictory(currentComboX), 10);
+  } else {
+    currentComboO.push(Number(target.dataset.id));
+    if (currentComboO.length > 2)
+      setTimeout(() => checkForVictory(currentComboO), 10);
+  }
+}
+
+function checkForVictory(arr: number[]) {
+  victory = !!winningCombos.find((combo) =>
+    combo.every((num) => arr.includes(num))
+  );
+  if (victory) {
+    if (isBotGame && currentSymbol === "X") {
+      const wantsMore = confirm("You lose! Want a revenge?");
+      if (wantsMore) reset();
+      else restart();
+    } else {
+      alertVictory();
+    }
+  } else checkForNoMoves();
+}
+
+function alertVictory() {
+  const wantsMore = confirm("Victory! Another round?");
+  if (wantsMore) reset();
+  else restart();
+}
+
+function checkForNoMoves() {
+  if (currentComboO.length === 4 && currentComboX.length === 5) {
+    const wantsReset = confirm("Oh no, no more moves! Reset?");
+    wantsReset ? reset() : restart();
+  }
+}
+
+function changeSymbol() {
+  currentSymbol = currentSymbol === "X" ? "O" : "X";
+  localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
+}
+
+function swapPlayers() {
+  console.log(activePlayer);
+  if (activePlayer === "" || player1Name) {
+    activePlayer = player2Name;
+  } else {
+    activePlayer = player1Name;
+  }
+  player1GameName?.classList.toggle("active-player");
+  player2GameName?.classList.toggle("active-player");
+}
+
+function saveData() {
+  localStorage.setItem("playerX", JSON.stringify(currentComboX));
+  localStorage.setItem("playerO", JSON.stringify(currentComboO));
+}
+
+// check for saved progress
 
 (function checkSaves() {
   const currentSaveX = localStorage.getItem("playerX");
@@ -119,262 +194,88 @@ function paintSaved(N: string, arr: number[]) {
   if (savedActive) currentSymbol = JSON.parse(savedActive);
 })();
 
+function paintSaved(N: string, arr: number[]) {
+  fieldies.forEach((fieldy) => {
+    if (fieldy.dataset.id && arr.includes(+fieldy.dataset.id)) {
+      fieldy.innerText = N;
+    }
+  });
+}
+
 //player vs bot
+
+function startBotGame() {
+  isBotGame = true;
+  clearCombos();
+  showField(gameDivBot);
+}
+
+function clearCombos() {
+  currentComboO = [];
+  currentComboX = [];
+}
 
 function handlePlayerMoveBot(e: MouseEvent) {
   const target = e.target as HTMLElement;
   if (target.textContent === "") {
-    target.innerText = currentSymbol;
+    paintSymbol(target);
     updateCombos(target);
-    currentSymbol = currentSymbol === "X" ? "O" : "X";
-    localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-    swapPlayers();
-    saveData();
-    checkPossibleWin(currentComboO);
+    changeSymbol();
+    botMove();
   } else {
     alert("This one is taken!");
   }
 }
 
-function checkPossibleWin(arr: number[] | undefined) {
-  if (arr?.includes(1)) {
-    if (arr.includes(2) && !fieldiesBot[2].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(2);
-      }, 300);
-      return;
-    }
-    if (arr.includes(3) && !fieldiesBot[1].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(1);
-      }, 300);
-      return;
-    }
-    if (arr.includes(4) && !fieldiesBot[6].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(6);
-      }, 300);
-      return;
-    }
-    if (arr.includes(7) && !fieldiesBot[3].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(3);
-      }, 300);
-      return;
-    }
-    if (arr.includes(5) && !fieldiesBot[8].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(8);
-      }, 300);
-      return;
-    }
-    if (arr.includes(9) && !fieldiesBot[4].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(4);
-      }, 300);
-      return;
-    }
+function botMove() {
+  let didntMakeAMove = checkPossibleWin(currentComboO);
+  if (didntMakeAMove) {
+    didntMakeAMove = checkPossibleWin(currentComboX);
   }
-  if (arr?.includes(2)) {
-    if (arr.includes(3) && !fieldiesBot[0].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(0);
-      }, 300);
-      return;
-    }
-    if (arr.includes(5) && !fieldiesBot[7].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(7);
-      }, 300);
-      return;
-    }
-    if (arr.includes(8) && !fieldiesBot[4].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(4);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.includes(3)) {
-    if (arr.includes(6) && !fieldiesBot[8].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(8);
-      }, 300);
-      return;
-    }
-    if (arr.includes(9) && !fieldiesBot[5].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(5);
-      }, 300);
-      return;
-    }
-    if (arr.includes(5) && !fieldiesBot[6].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(6);
-      }, 300);
-      return;
-    }
-    if (arr.includes(7) && !fieldiesBot[4].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(4);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.includes(4)) {
-    if (arr.includes(5) && !fieldiesBot[5].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(5);
-      }, 300);
-      return;
-    }
-    if (arr.includes(6) && !fieldiesBot[4].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(4);
-      }, 300);
-      return;
-    }
-    if (arr.includes(7) && !fieldiesBot[0].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(0);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.includes(5)) {
-    if (arr.includes(6) && !fieldiesBot[3].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(3);
-      }, 300);
-      return;
-    }
-    if (arr.includes(8) && !fieldiesBot[1].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(1);
-      }, 300);
-      return;
-    }
-    if (arr.includes(9) && !fieldiesBot[0].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(0);
-      }, 300);
-      return;
-    }
-    if (arr.includes(7) && !fieldiesBot[2].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(2);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.includes(6)) {
-    if (arr.includes(9) && !fieldiesBot[2].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(2);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.includes(7)) {
-    if (arr.includes(8) && !fieldiesBot[8].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(8);
-      }, 300);
-      return;
-    }
-    if (arr.includes(9) && !fieldiesBot[7].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(7);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.includes(8)) {
-    if (arr.includes(9) && !fieldiesBot[6].innerText) {
-      fieldiesBot.forEach((fieldy) =>
-        fieldy.removeEventListener("click", handlePlayerMoveBot)
-      );
-      setTimeout(() => {
-        handleBotMove(6);
-      }, 300);
-      return;
-    }
-  }
-  if (arr?.join("") === currentComboO.join("")) {
-    checkPossibleWin(currentComboX);
-  } else {
+  if (didntMakeAMove) {
     buildCombo();
   }
 }
+
+function handleBotMove(num: number) {
+  paintSymbol(fieldiesBot[num]);
+  updateCombos(fieldiesBot[num]);
+  currentSymbol = currentSymbol === "X" ? "O" : "X";
+  fieldiesBot.forEach((fieldy) => {
+    fieldy.addEventListener("click", handlePlayerMoveBot);
+  });
+}
+
+//common
+
+function reset() {
+  if (isBotGame) {
+    localStorage.clear();
+    clearCombos();
+    currentSymbol = "X";
+    fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));
+    victory = false;
+  } else {
+    const placeholderName = localStorage.getItem("player1") || "Player II";
+    player1Name = localStorage.getItem("player2") || "Player I";
+    player2Name = placeholderName || "Player II";
+
+    localStorage.removeItem("playerX");
+    localStorage.removeItem("playerO");
+    localStorage.removeItem("activePlayer");
+
+    localStorage.setItem("player1", player1Name);
+    localStorage.setItem("player2", player2Name);
+    location.reload();
+  }
+}
+
+function restart() {
+  localStorage.clear();
+  location.reload();
+}
+
+//bot move logic
 
 function buildCombo() {
   if (!fieldiesBot[4].innerText) {
@@ -416,110 +317,196 @@ function buildCombo() {
   }
 }
 
-function handleBotMove(num: number) {
-  fieldiesBot[num].innerText = currentSymbol;
-  updateCombos(fieldiesBot[num]);
-  currentSymbol = currentSymbol === "X" ? "O" : "X";
-  localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
-  swapPlayers();
-  saveData();
-  fieldiesBot.forEach((fieldy) => {
-    fieldy.addEventListener("click", handlePlayerMoveBot);
-  });
-}
-
-function startBotGame() {
-  isBotGame = true;
-  currentComboO = [];
-  currentComboX = [];
-  showField(gameDivBot);
-  setTimeout(() => fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = "")), 1);
-}
-
-//common
-
-function reset() {
-  if (isBotGame) {
-    localStorage.clear();
-    startBotGame();
-    currentSymbol = "X";
-    fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));
-  } else {
-    const placeholderName = localStorage.getItem("player1") || "Player II";
-    player1Name = localStorage.getItem("player2") || "Player I";
-    player2Name = placeholderName || "Player II";
-
-    localStorage.removeItem("playerX");
-    localStorage.removeItem("playerO");
-    localStorage.removeItem("activePlayer");
-
-    localStorage.setItem("player1", player1Name);
-    localStorage.setItem("player2", player2Name);
-    location.reload();
-  }
-}
-
-function restart() {
-  if (isBotGame) {
-    currentSymbol = "X";
-  }
-  localStorage.clear();
-  location.reload();
-}
-
-function saveData() {
-  localStorage.setItem("playerX", JSON.stringify(currentComboX));
-  localStorage.setItem("playerO", JSON.stringify(currentComboO));
-}
-
-function checkForVictory(arr: number[]) {
-  const victory = winningCombos.find((combo) =>
-    combo.every((num) => arr.includes(num))
+function stopListening() {
+  fieldiesBot.forEach((fieldy) =>
+    fieldy.removeEventListener("click", handlePlayerMoveBot)
   );
-  if (victory) {
-    if (isBotGame && currentSymbol === "X") {
-      const wantsMore = confirm("You lose! Want a revenge?");
-      if (wantsMore) reset();
-      else restart();
-    } else {
-      const wantsMore = confirm("Victory! Another round?");
-      if (wantsMore) reset();
-      else restart();
+}
+
+function checkPossibleWin(arr: number[] | undefined) {
+  if (arr?.includes(1)) {
+    if (arr.includes(2) && !fieldiesBot[2].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(2);
+      }, 300);
+      return;
     }
-  } else checkForNoMoves();
-}
-
-function checkForNoMoves() {
-  if (currentComboO.length === 4 && currentComboX.length === 5) {
-    const wantsReset = confirm("Oh no, no more moves! Reset?");
-    wantsReset ? reset() : restart();
-    return;
+    if (arr.includes(3) && !fieldiesBot[1].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(1);
+      }, 300);
+      return;
+    }
+    if (arr.includes(4) && !fieldiesBot[6].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(6);
+      }, 300);
+      return;
+    }
+    if (arr.includes(7) && !fieldiesBot[3].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(3);
+      }, 300);
+      return;
+    }
+    if (arr.includes(5) && !fieldiesBot[8].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(8);
+      }, 300);
+      return;
+    }
+    if (arr.includes(9) && !fieldiesBot[4].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(4);
+      }, 300);
+      return;
+    }
   }
-}
-
-function updateCombos(target: HTMLElement) {
-  if (currentSymbol === "X") {
-    currentComboX.push(Number(target.dataset.id));
-    if (currentComboX.length > 2)
-      setTimeout(() => checkForVictory(currentComboX), 10);
-  } else {
-    currentComboO.push(Number(target.dataset.id));
-    if (currentComboO.length > 2)
-      setTimeout(() => checkForVictory(currentComboO), 10);
+  if (arr?.includes(2)) {
+    if (arr.includes(3) && !fieldiesBot[0].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(0);
+      }, 300);
+      return;
+    }
+    if (arr.includes(5) && !fieldiesBot[7].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(7);
+      }, 300);
+      return;
+    }
+    if (arr.includes(8) && !fieldiesBot[4].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(4);
+      }, 300);
+      return;
+    }
   }
-}
-
-function swapPlayers() {
-  if (activePlayer === "" || player1Name) {
-    activePlayer = player2Name;
-  } else {
-    activePlayer = player1Name;
+  if (arr?.includes(3)) {
+    if (arr.includes(6) && !fieldiesBot[8].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(8);
+      }, 300);
+      return;
+    }
+    if (arr.includes(9) && !fieldiesBot[5].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(5);
+      }, 300);
+      return;
+    }
+    if (arr.includes(5) && !fieldiesBot[6].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(6);
+      }, 300);
+      return;
+    }
+    if (arr.includes(7) && !fieldiesBot[4].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(4);
+      }, 300);
+      return;
+    }
   }
-  player1GameName?.classList.toggle("active-player");
-  player2GameName?.classList.toggle("active-player");
-}
-
-function showField(thumb: Element | null) {
-  menu?.classList.add("visually-hidden");
-  thumb?.classList.remove("visually-hidden");
+  if (arr?.includes(4)) {
+    if (arr.includes(5) && !fieldiesBot[5].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(5);
+      }, 300);
+      return;
+    }
+    if (arr.includes(6) && !fieldiesBot[4].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(4);
+      }, 300);
+      return;
+    }
+    if (arr.includes(7) && !fieldiesBot[0].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(0);
+      }, 300);
+      return;
+    }
+  }
+  if (arr?.includes(5)) {
+    if (arr.includes(6) && !fieldiesBot[3].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(3);
+      }, 300);
+      return;
+    }
+    if (arr.includes(8) && !fieldiesBot[1].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(1);
+      }, 300);
+      return;
+    }
+    if (arr.includes(9) && !fieldiesBot[0].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(0);
+      }, 300);
+      return;
+    }
+    if (arr.includes(7) && !fieldiesBot[2].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(2);
+      }, 300);
+      return;
+    }
+  }
+  if (arr?.includes(6)) {
+    if (arr.includes(9) && !fieldiesBot[2].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(2);
+      }, 300);
+      return;
+    }
+  }
+  if (arr?.includes(7)) {
+    if (arr.includes(8) && !fieldiesBot[8].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(8);
+      }, 300);
+      return;
+    }
+    if (arr.includes(9) && !fieldiesBot[7].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(7);
+      }, 300);
+      return;
+    }
+  }
+  if (arr?.includes(8)) {
+    if (arr.includes(9) && !fieldiesBot[6].innerText) {
+      stopListening();
+      setTimeout(() => {
+        handleBotMove(6);
+      }, 300);
+      return;
+    }
+  }
+  return true;
 }
