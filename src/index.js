@@ -213,9 +213,9 @@ function botMove() {
     }
 }
 function handleBotMove(num) {
-    updateCombos(fieldiesBot[num]);
     setTimeout(function () {
         paintSymbol(fieldiesBot[num]);
+        updateCombos(fieldiesBot[num]);
         currentSymbol = currentSymbol === "X" ? "O" : "X";
         startListening();
     }, 400);
@@ -225,8 +225,8 @@ function reset() {
     if (isBotGame) {
         localStorage.clear();
         clearCombos();
-        currentSymbol = "X";
         setTimeout(function () {
+            currentSymbol = "X";
             fieldiesBot.forEach(function (fieldy) { return (fieldy.innerHTML = ""); });
             victory = false;
             startListening();
