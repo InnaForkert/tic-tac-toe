@@ -104,7 +104,16 @@ function checkForVictory(arr) {
         checkForNoMoves();
 }
 function alertVictory() {
-    var wantsMore = confirm("Victory! Another round?");
+    var wantsMore;
+    if (isBotGame) {
+        if (currentSymbol === "X")
+            wantsMore = confirm("Yahoo! You win! Another round?");
+        else
+            wantsMore = confirm("Oh no, bot won:( Looking for revenge?");
+    }
+    else {
+        wantsMore = confirm("".concat(activePlayer, " was crushed! Another round?"));
+    }
     if (wantsMore)
         reset();
     else

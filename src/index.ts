@@ -128,7 +128,14 @@ function checkForVictory(arr: number[]) {
 }
 
 function alertVictory() {
-  const wantsMore = confirm("Victory! Another round?");
+  let wantsMore: boolean | undefined;
+  if (isBotGame) {
+    if (currentSymbol === "X")
+      wantsMore = confirm("Yahoo! You win! Another round?");
+    else wantsMore = confirm("Oh no, bot won:( Looking for revenge?");
+  } else {
+    wantsMore = confirm(`${activePlayer} was crushed! Another round?`);
+  }
   if (wantsMore) reset();
   else restart();
 }
