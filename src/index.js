@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var refs_1 = require("./scripts/refs");
+var botCombo_1 = require("./scripts/botCombo");
 var menu = refs_1.refs.menu, gameDiv = refs_1.refs.gameDiv, gameDivBot = refs_1.refs.gameDivBot, form = refs_1.refs.form, player1 = refs_1.refs.player1, player2 = refs_1.refs.player2, player1GameName = refs_1.refs.player1GameName, player2GameName = refs_1.refs.player2GameName, fieldies = refs_1.refs.fieldies, fieldiesBot = refs_1.refs.fieldiesBot, restartBtn = refs_1.refs.restartBtn, restartBtnBot = refs_1.refs.restartBtnBot, resetBtn = refs_1.refs.resetBtn, resetBtnBot = refs_1.refs.resetBtnBot, botStart = refs_1.refs.botStart;
 var winningCombos = [
     [1, 2, 3],
@@ -12,6 +13,7 @@ var winningCombos = [
     [1, 5, 9],
     [3, 5, 7],
 ];
+var comboArray = (0, botCombo_1.createBotCombo)();
 var currentComboX = [];
 var currentComboO = [];
 var currentSymbol = "X";
@@ -218,7 +220,7 @@ function botMove() {
         didntMakeAMove = checkPossibleWin(currentComboX);
     }
     if (didntMakeAMove && !victory) {
-        buildCombo();
+        buildCombo(comboArray);
     }
 }
 function handleBotMove(num) {
@@ -234,6 +236,7 @@ function reset() {
     if (isBotGame) {
         localStorage.clear();
         clearCombos();
+        comboArray = (0, botCombo_1.createBotCombo)();
         setTimeout(function () {
             currentSymbol = "X";
             fieldiesBot.forEach(function (fieldy) { return (fieldy.innerHTML = ""); });
@@ -259,9 +262,9 @@ function restart() {
     location.reload();
 }
 //bot move logic
-function buildCombo() {
-    var comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
-    var num = comboArray.find(function (num) { return !fieldiesBot[num].innerText; });
+function buildCombo(arr) {
+    // const comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
+    var num = arr.find(function (num) { return !fieldiesBot[num].innerText; });
     if (num)
         handleBotMove(num);
 }

@@ -1,4 +1,5 @@
 import { refs } from "./scripts/refs";
+import { createBotCombo } from "./scripts/botCombo";
 
 const {
   menu,
@@ -29,6 +30,7 @@ const winningCombos = [
   [3, 5, 7],
 ];
 
+let comboArray: number[] = createBotCombo();
 let currentComboX: number[] = [];
 let currentComboO: number[] = [];
 let currentSymbol: string = "X";
@@ -250,7 +252,7 @@ function botMove() {
     didntMakeAMove = checkPossibleWin(currentComboX);
   }
   if (didntMakeAMove && !victory) {
-    buildCombo();
+    buildCombo(comboArray);
   }
 }
 
@@ -269,6 +271,7 @@ function reset() {
   if (isBotGame) {
     localStorage.clear();
     clearCombos();
+    comboArray = createBotCombo();
     setTimeout(() => {
       currentSymbol = "X";
       fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));
@@ -298,9 +301,9 @@ function restart() {
 
 //bot move logic
 
-function buildCombo() {
-  const comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
-  const num = comboArray.find((num) => !fieldiesBot[num].innerText);
+function buildCombo(arr) {
+  // const comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
+  const num = arr.find((num) => !fieldiesBot[num].innerText);
   if (num) handleBotMove(num);
 }
 

@@ -535,6 +535,7 @@ function hmrAcceptRun(bundle, id) {
 "use strict";
 exports.__esModule = true;
 var refs_1 = require("./scripts/refs");
+var botCombo_1 = require("./scripts/botCombo");
 var menu = refs_1.refs.menu, gameDiv = refs_1.refs.gameDiv, gameDivBot = refs_1.refs.gameDivBot, form = refs_1.refs.form, player1 = refs_1.refs.player1, player2 = refs_1.refs.player2, player1GameName = refs_1.refs.player1GameName, player2GameName = refs_1.refs.player2GameName, fieldies = refs_1.refs.fieldies, fieldiesBot = refs_1.refs.fieldiesBot, restartBtn = refs_1.refs.restartBtn, restartBtnBot = refs_1.refs.restartBtnBot, resetBtn = refs_1.refs.resetBtn, resetBtnBot = refs_1.refs.resetBtnBot, botStart = refs_1.refs.botStart;
 var winningCombos = [
     [
@@ -578,6 +579,7 @@ var winningCombos = [
         7
     ], 
 ];
+var comboArray = (0, botCombo_1.createBotCombo)();
 var currentComboX = [];
 var currentComboO = [];
 var currentSymbol = "X";
@@ -751,7 +753,7 @@ function botMove() {
     var didntMakeAMove = true;
     if (!victory && didntMakeAMove) didntMakeAMove = checkPossibleWin(currentComboO);
     if (didntMakeAMove && !victory) didntMakeAMove = checkPossibleWin(currentComboX);
-    if (didntMakeAMove && !victory) buildCombo();
+    if (didntMakeAMove && !victory) buildCombo(comboArray);
 }
 function handleBotMove(num) {
     setTimeout(function() {
@@ -766,6 +768,7 @@ function reset() {
     if (isBotGame) {
         localStorage.clear();
         clearCombos();
+        comboArray = (0, botCombo_1.createBotCombo)();
         setTimeout(function() {
             currentSymbol = "X";
             fieldiesBot.forEach(function(fieldy) {
@@ -792,19 +795,9 @@ function restart() {
     location.reload();
 }
 //bot move logic
-function buildCombo() {
-    var comboArray = [
-        4,
-        0,
-        2,
-        6,
-        8,
-        1,
-        3,
-        5,
-        7
-    ];
-    var num = comboArray.find(function(num) {
+function buildCombo(arr) {
+    // const comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
+    var num = arr.find(function(num) {
         return !fieldiesBot[num].innerText;
     });
     if (num) handleBotMove(num);
@@ -925,7 +918,7 @@ function checkPossibleWin(arr) {
     return true;
 }
 
-},{"./scripts/refs":"jHtzO"}],"jHtzO":[function(require,module,exports) {
+},{"./scripts/refs":"jHtzO","./scripts/botCombo":"2BYuR"}],"jHtzO":[function(require,module,exports) {
 "use strict";
 exports.__esModule = true;
 exports.refs = void 0;
@@ -946,6 +939,137 @@ exports.refs = {
     resetBtnBot: document.querySelector("#resetBtnBot"),
     botStart: document.querySelector(".botButton")
 };
+
+},{}],"2BYuR":[function(require,module,exports) {
+"use strict";
+exports.__esModule = true;
+exports.createBotCombo = void 0;
+function createBotCombo() {
+    var rand = Math.round(Math.random() * 10);
+    switch(rand){
+        case 1:
+            return [
+                4,
+                0,
+                2,
+                6,
+                8,
+                1,
+                3,
+                5,
+                7
+            ];
+        case 2:
+            return [
+                0,
+                8,
+                2,
+                6,
+                4,
+                3,
+                5,
+                7,
+                1
+            ];
+        case 3:
+            return [
+                0,
+                8,
+                6,
+                2,
+                4,
+                5,
+                3,
+                7,
+                1
+            ];
+        case 4:
+            return [
+                2,
+                6,
+                0,
+                8,
+                4,
+                1,
+                7,
+                5,
+                3
+            ];
+        case 5:
+            return [
+                6,
+                2,
+                0,
+                8,
+                4,
+                1,
+                7,
+                3,
+                5
+            ];
+        case 6:
+            return [
+                6,
+                2,
+                8,
+                0,
+                4,
+                1,
+                5,
+                7,
+                3
+            ];
+        case 7:
+            return [
+                8,
+                0,
+                6,
+                2,
+                4,
+                5,
+                7,
+                1,
+                3
+            ];
+        case 8:
+            return [
+                8,
+                0,
+                2,
+                6,
+                4,
+                5,
+                7,
+                3,
+                1
+            ];
+        case 9:
+            return [
+                2,
+                6,
+                8,
+                0,
+                4,
+                7,
+                3,
+                5,
+                1
+            ];
+        default:
+            return [
+                4,
+                0,
+                2,
+                6,
+                8,
+                1,
+                3,
+                7,
+                5
+            ];
+    }
+}
+exports.createBotCombo = createBotCombo;
 
 },{}]},["ShInH","8lqZg"], "8lqZg", "parcelRequire1ecf")
 
