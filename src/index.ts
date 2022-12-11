@@ -286,6 +286,7 @@ function reset() {
 
     localStorage.setItem("player1", player1Name);
     localStorage.setItem("player2", player2Name);
+    clearCombos();
     location.reload();
   }
 }
