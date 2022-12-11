@@ -125,7 +125,7 @@ function checkForVictory(arr: number[]) {
     combo.every((num) => arr.includes(num))
   );
   if (victory) {
-    alertVictory();
+    setTimeout(() => alertVictory(), 20);
   } else checkForNoMoves();
 }
 
@@ -155,7 +155,6 @@ function changeSymbol() {
 }
 
 function swapPlayers() {
-  console.log(activePlayer);
   if (activePlayer === "" || player1Name) {
     activePlayer = player2Name;
   } else {
@@ -275,7 +274,6 @@ function reset() {
     localStorage.clear();
     clearCombos();
     comboArray = createBotCombo();
-    console.log(comboArray);
     setTimeout(() => {
       currentSymbol = "X";
       fieldiesBot.forEach((fieldy) => (fieldy.innerHTML = ""));

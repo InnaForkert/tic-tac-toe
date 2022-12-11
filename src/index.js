@@ -100,7 +100,7 @@ function checkForVictory(arr) {
         return combo.every(function (num) { return arr.includes(num); });
     });
     if (victory) {
-        alertVictory();
+        setTimeout(function () { return alertVictory(); }, 20);
     }
     else
         checkForNoMoves();

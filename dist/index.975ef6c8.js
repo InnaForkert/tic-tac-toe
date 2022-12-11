@@ -658,7 +658,9 @@ function checkForVictory(arr) {
             return arr.includes(num);
         });
     });
-    if (victory) alertVictory();
+    if (victory) setTimeout(function() {
+        return alertVictory();
+    }, 20);
     else checkForNoMoves();
 }
 function alertVictory() {
