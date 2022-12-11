@@ -220,6 +220,9 @@ function botMove() {
         didntMakeAMove = checkPossibleWin(currentComboX);
     }
     if (didntMakeAMove && !victory) {
+        didntMakeAMove = counterAttack(currentComboX);
+    }
+    if (didntMakeAMove && !victory) {
         buildCombo(comboArray);
     }
 }
@@ -237,6 +240,7 @@ function reset() {
         localStorage.clear();
         clearCombos();
         comboArray = (0, botCombo_1.createBotCombo)();
+        console.log(comboArray);
         setTimeout(function () {
             currentSymbol = "X";
             fieldiesBot.forEach(function (fieldy) { return (fieldy.innerHTML = ""); });
@@ -263,10 +267,28 @@ function restart() {
 }
 //bot move logic
 function buildCombo(arr) {
-    // const comboArray = [4, 0, 2, 6, 8, 1, 3, 5, 7];
     var num = arr.find(function (num) { return !fieldiesBot[num].innerText; });
-    if (num)
+    if (num || num === 0)
         handleBotMove(num);
+}
+function counterAttack(arr) {
+    if (arr.includes(1) && !fieldiesBot[8].innerText) {
+        handleBotMove(8);
+        return;
+    }
+    else if (arr.includes(3) && !fieldiesBot[6].innerText) {
+        handleBotMove(6);
+        return;
+    }
+    else if (arr.includes(7) && !fieldiesBot[2].innerText) {
+        handleBotMove(2);
+        return;
+    }
+    else if (arr.includes(9) && !fieldiesBot[0].innerText) {
+        handleBotMove(0);
+        return;
+    }
+    return true;
 }
 function checkPossibleWin(arr) {
     if (arr === null || arr === void 0 ? void 0 : arr.includes(1)) {
