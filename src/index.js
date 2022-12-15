@@ -100,15 +100,15 @@ function checkForVictory(arr) {
         return combo.every(function (num) { return arr.includes(num); });
     });
     if (victory) {
-        setTimeout(function () { return alertVictory(); }, 20);
+        setTimeout(function () { return alertVictory(arr); }, 20);
     }
     else
         checkForNoMoves();
 }
-function alertVictory() {
+function alertVictory(arr) {
     var wantsMore;
     if (isBotGame) {
-        if (currentSymbol === "X")
+        if (arr === currentComboX)
             wantsMore = confirm("Yahoo! You win! Another round?");
         else
             wantsMore = confirm("Oh no, bot won:( Looking for revenge?");
@@ -132,7 +132,6 @@ function changeSymbol() {
     localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
 }
 function swapPlayers() {
-    console.log(activePlayer);
     if (activePlayer === "" || player1Name) {
         activePlayer = player2Name;
     }
@@ -240,7 +239,6 @@ function reset() {
         localStorage.clear();
         clearCombos();
         comboArray = (0, botCombo_1.createBotCombo)();
-        console.log(comboArray);
         setTimeout(function () {
             currentSymbol = "X";
             fieldiesBot.forEach(function (fieldy) { return (fieldy.innerHTML = ""); });

@@ -125,14 +125,14 @@ function checkForVictory(arr: number[]) {
     combo.every((num) => arr.includes(num))
   );
   if (victory) {
-    setTimeout(() => alertVictory(), 20);
+    setTimeout(() => alertVictory(arr), 20);
   } else checkForNoMoves();
 }
 
-function alertVictory() {
+function alertVictory(arr) {
   let wantsMore: boolean | undefined;
   if (isBotGame) {
-    if (currentSymbol === "X")
+    if (arr===currentComboX)
       wantsMore = confirm("Yahoo! You win! Another round?");
     else wantsMore = confirm("Oh no, bot won:( Looking for revenge?");
   } else {

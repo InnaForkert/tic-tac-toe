@@ -659,14 +659,14 @@ function checkForVictory(arr) {
         });
     });
     if (victory) setTimeout(function() {
-        return alertVictory();
+        return alertVictory(arr);
     }, 20);
     else checkForNoMoves();
 }
-function alertVictory() {
+function alertVictory(arr) {
     var wantsMore;
     if (isBotGame) {
-        if (currentSymbol === "X") wantsMore = confirm("Yahoo! You win! Another round?");
+        if (arr === currentComboX) wantsMore = confirm("Yahoo! You win! Another round?");
         else wantsMore = confirm("Oh no, bot won:( Looking for revenge?");
     } else wantsMore = confirm("".concat(activePlayer, " was crushed! Another round?"));
     if (wantsMore) reset();
@@ -683,7 +683,6 @@ function changeSymbol() {
     localStorage.setItem("activePlayer", JSON.stringify(currentSymbol));
 }
 function swapPlayers() {
-    console.log(activePlayer);
     if (activePlayer === "" || player1Name) activePlayer = player2Name;
     else activePlayer = player1Name;
     player1GameName === null || player1GameName === void 0 || player1GameName.classList.toggle("active-player");
@@ -772,7 +771,6 @@ function reset() {
         localStorage.clear();
         clearCombos();
         comboArray = (0, botCombo_1.createBotCombo)();
-        console.log(comboArray);
         setTimeout(function() {
             currentSymbol = "X";
             fieldiesBot.forEach(function(fieldy) {
