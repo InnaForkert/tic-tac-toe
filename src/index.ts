@@ -1,5 +1,6 @@
 import { refs } from "./scripts/refs";
 import { createBotCombo } from "./scripts/botCombo";
+import { createSwal } from "./scripts/swal";
 
 const {
   menu,
@@ -129,14 +130,21 @@ function checkForVictory(arr: number[]) {
   } else checkForNoMoves();
 }
 
-function alertVictory(arr) {
-  let wantsMore: boolean | undefined;
+async function alertVictory(arr: number[]) {
+  let wantsMore: boolean;
   if (isBotGame) {
-    if (arr===currentComboX)
-      wantsMore = confirm("Yahoo! You win! Another round?");
-    else wantsMore = confirm("Oh no, bot won:( Looking for revenge?");
+    if (arr === currentComboX) {
+      wantsMore = await createSwal("Yahoo! You win! Another round?", true);
+    } else
+      wantsMore = await createSwal(
+        "Oh no, bot won:( Looking for revenge?",
+        false
+      );
   } else {
-    wantsMore = confirm(`${activePlayer} was crushed! Another round?`);
+    wantsMore = await createSwal(
+      `${activePlayer} was crushed! Another round?`,
+      true
+    );
   }
   if (wantsMore) reset();
   else restart();

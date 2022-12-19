@@ -40,3 +40,16 @@ body {
     box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
   }
 }
+
+.swal {
+  margin: 10px;
+}
+
+.black.swal {
+  color: $black;
+  cursor: $cursor;
+}
+
+.animate__animated.animate__bounceOut {
+  --animate-duration: 500ms;
+}
