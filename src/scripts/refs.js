@@ -16,5 +16,7 @@ exports.refs = {
     restartBtnBot: document.querySelector("#restartBtnBot"),
     resetBtn: document.querySelector("#resetBtn"),
     resetBtnBot: document.querySelector("#resetBtnBot"),
-    botStart: document.querySelector(".botButton")
+    botStart: document.querySelector(".botButton"),
+    musicBtn: document.querySelector(".music"),
+    soundBtn: document.querySelector(".sound")
 };

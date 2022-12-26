@@ -39,7 +39,10 @@ exports.__esModule = true;
 var refs_1 = require("./scripts/refs");
 var botCombo_1 = require("./scripts/botCombo");
 var swal_1 = require("./scripts/swal");
+var sounds_1 = require("./scripts/sounds");
+require("./scripts/sounds");
 var menu = refs_1.refs.menu, gameDiv = refs_1.refs.gameDiv, gameDivBot = refs_1.refs.gameDivBot, form = refs_1.refs.form, player1 = refs_1.refs.player1, player2 = refs_1.refs.player2, player1GameName = refs_1.refs.player1GameName, player2GameName = refs_1.refs.player2GameName, fieldies = refs_1.refs.fieldies, fieldiesBot = refs_1.refs.fieldiesBot, restartBtn = refs_1.refs.restartBtn, restartBtnBot = refs_1.refs.restartBtnBot, resetBtn = refs_1.refs.resetBtn, resetBtnBot = refs_1.refs.resetBtnBot, botStart = refs_1.refs.botStart;
+var backgroundSound = sounds_1.sounds.backgroundSound, lostSound = sounds_1.sounds.lostSound, stepSound = sounds_1.sounds.stepSound, takenSound = sounds_1.sounds.takenSound, victorySound = sounds_1.sounds.victorySound;
 var winningCombos = [
     [1, 2, 3],
     [4, 5, 6],
@@ -119,6 +122,7 @@ function handlePlayerMove(e) {
 }
 function paintSymbol(div) {
     div.innerText = currentSymbol;
+    stepSound.play();
 }
 function updateCombos(target) {
     if (currentSymbol === "X") {
@@ -137,7 +141,7 @@ function checkForVictory(arr) {
         return combo.every(function (num) { return arr.includes(num); });
     });
     if (victory) {
-        setTimeout(function () { return alertVictory(arr); }, 20);
+        setTimeout(function () { return alertVictory(arr); }, 10);
     }
     else
         checkForNoMoves();
@@ -283,7 +287,7 @@ function handleBotMove(num) {
         updateCombos(fieldiesBot[num]);
         currentSymbol = currentSymbol === "X" ? "O" : "X";
         startListening();
-    }, 400);
+    }, 450);
 }
 //common
 function reset() {

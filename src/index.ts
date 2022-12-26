@@ -1,6 +1,8 @@
 import { refs } from "./scripts/refs";
 import { createBotCombo } from "./scripts/botCombo";
 import { createSwal } from "./scripts/swal";
+import { sounds } from "./scripts/sounds";
+import "./scripts/sounds";
 
 const {
   menu,
@@ -19,6 +21,9 @@ const {
   resetBtnBot,
   botStart,
 } = refs;
+
+const { backgroundSound, lostSound, stepSound, takenSound, victorySound } =
+  sounds;
 
 const winningCombos = [
   [1, 2, 3],
@@ -109,6 +114,7 @@ function handlePlayerMove(e: MouseEvent) {
 
 function paintSymbol(div: HTMLElement) {
   div.innerText = currentSymbol;
+  stepSound.play();
 }
 
 function updateCombos(target: HTMLElement) {
@@ -126,7 +132,7 @@ function checkForVictory(arr: number[]) {
     combo.every((num) => arr.includes(num))
   );
   if (victory) {
-    setTimeout(() => alertVictory(arr), 20);
+    setTimeout(() => alertVictory(arr), 10);
   } else checkForNoMoves();
 }
 
@@ -272,7 +278,7 @@ function handleBotMove(num: number) {
     updateCombos(fieldiesBot[num]);
     currentSymbol = currentSymbol === "X" ? "O" : "X";
     startListening();
-  }, 400);
+  }, 450);
 }
 
 //common

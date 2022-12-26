@@ -199,6 +199,42 @@ body {
   font-weight: 400;
 }
 
+.music {
+  width: 25px;
+  height: 50px;
+  color: #0000;
+  text-align: center;
+  background-image: url("music.76cc2ae9.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 37px;
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
+
+.sound {
+  width: 25px;
+  height: 50px;
+  color: #0000;
+  text-align: center;
+  background-image: url("volume.669f33fb.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 37px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
+}
+
+.musicOff {
+  color: red;
+}
+
 :root {
   --animate-duration: 1s;
   --animate-delay: 1s;
