@@ -22,8 +22,7 @@ const {
   botStart,
 } = refs;
 
-const { backgroundSound, lostSound, stepSound, takenSound, victorySound } =
-  sounds;
+const { stepSound, takenSound } = sounds;
 
 const winningCombos = [
   [1, 2, 3],
@@ -108,6 +107,7 @@ function handlePlayerMove(e: MouseEvent) {
     swapPlayers();
     saveData();
   } else {
+    takenSound.play();
     alert("This one is taken!");
   }
 }
@@ -240,6 +240,7 @@ function handlePlayerMoveBot(e: MouseEvent) {
       if (currentSymbol === "O") botMove();
     }
   } else {
+    takenSound.play();
     alert("This one is taken!");
   }
 }

@@ -662,7 +662,7 @@ var swal_1 = require("./scripts/swal");
 var sounds_1 = require("./scripts/sounds");
 require("./scripts/sounds");
 var menu = refs_1.refs.menu, gameDiv = refs_1.refs.gameDiv, gameDivBot = refs_1.refs.gameDivBot, form = refs_1.refs.form, player1 = refs_1.refs.player1, player2 = refs_1.refs.player2, player1GameName = refs_1.refs.player1GameName, player2GameName = refs_1.refs.player2GameName, fieldies = refs_1.refs.fieldies, fieldiesBot = refs_1.refs.fieldiesBot, restartBtn = refs_1.refs.restartBtn, restartBtnBot = refs_1.refs.restartBtnBot, resetBtn = refs_1.refs.resetBtn, resetBtnBot = refs_1.refs.resetBtnBot, botStart = refs_1.refs.botStart;
-var backgroundSound = sounds_1.sounds.backgroundSound, lostSound = sounds_1.sounds.lostSound, stepSound = sounds_1.sounds.stepSound, takenSound = sounds_1.sounds.takenSound, victorySound = sounds_1.sounds.victorySound;
+var stepSound = sounds_1.sounds.stepSound, takenSound = sounds_1.sounds.takenSound;
 var winningCombos = [
     [
         1,
@@ -764,7 +764,10 @@ function handlePlayerMove(e) {
         changeSymbol();
         swapPlayers();
         saveData();
-    } else alert("This one is taken!");
+    } else {
+        takenSound.play();
+        alert("This one is taken!");
+    }
 }
 function paintSymbol(div) {
     div.innerText = currentSymbol;
@@ -911,7 +914,10 @@ function handlePlayerMoveBot(e) {
             currentSymbol = currentSymbol === "X" ? "O" : "X";
             if (currentSymbol === "O") botMove();
         }
-    } else alert("This one is taken!");
+    } else {
+        takenSound.play();
+        alert("This one is taken!");
+    }
 }
 function stopListening() {
     fieldiesBot.forEach(function(fieldy) {
@@ -1391,12 +1397,15 @@ exports.__esModule = true;
 exports.createSwal = void 0;
 var sweetalert2_1 = require("sweetalert2");
 require("animate.css");
+var sounds_1 = require("./sounds");
 function createSwal(title, victory) {
     return __awaiter(this, void 0, void 0, function() {
         var url, result;
         return __generator(this, function(_a) {
             switch(_a.label){
                 case 0:
+                    if (victory) sounds_1.sounds.victorySound.play();
+                    else sounds_1.sounds.lostSound.play();
                     url = victory ? "https://cliply.co/wp-content/uploads/2021/09/CLIPLY_372109170_FREE_FIREWORKS_400.gif" : "https://i.pinimg.com/originals/fb/ed/b2/fbedb25b550829b8b4c4984b45992b39.gif";
                     return [
                         4 /*yield*/ ,
@@ -1435,7 +1444,7 @@ function createSwal(title, victory) {
 }
 exports.createSwal = createSwal;
 
-},{"sweetalert2":"1HyFr","animate.css":"8t3va"}],"1HyFr":[function(require,module,exports) {
+},{"sweetalert2":"1HyFr","animate.css":"8t3va","./sounds":"7Hlpd"}],"1HyFr":[function(require,module,exports) {
 /*!
 * sweetalert2 v11.6.15
 * Released under the MIT License.
@@ -4730,6 +4739,13 @@ musicBtn === null || musicBtn === void 0 || musicBtn.addEventListener("click", t
 soundBtn === null || soundBtn === void 0 || soundBtn.addEventListener("click", toggleSounds);
 exports.sounds.backgroundSound.addEventListener("canplaythrough", function() {
     exports.sounds.backgroundSound.play();
+    exports.sounds.backgroundSound.addEventListener("timeupdate", function() {
+        var buffer = 0.5;
+        if (exports.sounds.backgroundSound.currentTime > exports.sounds.backgroundSound.duration - buffer) setTimeout(function() {
+            exports.sounds.backgroundSound.currentTime = 0;
+            exports.sounds.backgroundSound.play();
+        }, 0.27);
+    });
 });
 function toggleMusic() {
     exports.sounds.backgroundSound.muted = !exports.sounds.backgroundSound.muted;
@@ -4743,7 +4759,7 @@ function toggleSounds() {
     soundBtn === null || soundBtn === void 0 || soundBtn.classList.toggle("musicOff");
 }
 
-},{"url:../sounds/step.wav":"f8nme","url:../sounds/bcg.wav":"ksIJt","url:../sounds/lost.wav":"8sQyi","url:../sounds/victory.wav":"4bnaS","url:../sounds/taken.wav":"ldNy3","./refs":"jHtzO"}],"f8nme":[function(require,module,exports) {
+},{"./refs":"jHtzO","url:../sounds/step.wav":"f8nme","url:../sounds/bcg.wav":"ksIJt","url:../sounds/lost.wav":"8sQyi","url:../sounds/victory.wav":"4bnaS","url:../sounds/taken.wav":"ldNy3"}],"f8nme":[function(require,module,exports) {
 module.exports = require("./helpers/bundle-url").getBundleURL("bLxZJ") + "step.db8de405.wav" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {

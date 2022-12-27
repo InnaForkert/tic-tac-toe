@@ -14,6 +14,16 @@ musicBtn === null || musicBtn === void 0 ? void 0 : musicBtn.addEventListener("c
 soundBtn === null || soundBtn === void 0 ? void 0 : soundBtn.addEventListener("click", toggleSounds);
 exports.sounds.backgroundSound.addEventListener("canplaythrough", function () {
     exports.sounds.backgroundSound.play();
+    exports.sounds.backgroundSound.addEventListener("timeupdate", function () {
+        var buffer = 0.5;
+        if (exports.sounds.backgroundSound.currentTime >
+            exports.sounds.backgroundSound.duration - buffer) {
+            setTimeout(function () {
+                exports.sounds.backgroundSound.currentTime = 0;
+                exports.sounds.backgroundSound.play();
+            }, 0.27);
+        }
+    });
 });
 function toggleMusic() {
     exports.sounds.backgroundSound.muted = !exports.sounds.backgroundSound.muted;

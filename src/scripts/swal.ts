@@ -1,7 +1,13 @@
 import Swal from "sweetalert2";
 import "animate.css";
+import { sounds } from "./sounds";
 
 export async function createSwal(title: string, victory: boolean) {
+  if (victory) {
+    sounds.victorySound.play();
+  } else {
+    sounds.lostSound.play();
+  }
   const url = victory
     ? "https://cliply.co/wp-content/uploads/2021/09/CLIPLY_372109170_FREE_FIREWORKS_400.gif"
     : "https://i.pinimg.com/originals/fb/ed/b2/fbedb25b550829b8b4c4984b45992b39.gif";

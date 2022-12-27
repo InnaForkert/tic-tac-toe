@@ -39,12 +39,19 @@ exports.__esModule = true;
 exports.createSwal = void 0;
 var sweetalert2_1 = require("sweetalert2");
 require("animate.css");
+var sounds_1 = require("./sounds");
 function createSwal(title, victory) {
     return __awaiter(this, void 0, void 0, function () {
         var url, result;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
+                    if (victory) {
+                        sounds_1.sounds.victorySound.play();
+                    }
+                    else {
+                        sounds_1.sounds.lostSound.play();
+                    }
                     url = victory
                         ? "https://cliply.co/wp-content/uploads/2021/09/CLIPLY_372109170_FREE_FIREWORKS_400.gif"
                         : "https://i.pinimg.com/originals/fb/ed/b2/fbedb25b550829b8b4c4984b45992b39.gif";

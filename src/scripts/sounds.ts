@@ -15,6 +15,18 @@ soundBtn?.addEventListener("click", toggleSounds);
 
 sounds.backgroundSound.addEventListener("canplaythrough", () => {
   sounds.backgroundSound.play();
+  sounds.backgroundSound.addEventListener("timeupdate", () => {
+    const buffer = 0.5;
+    if (
+      sounds.backgroundSound.currentTime >
+      sounds.backgroundSound.duration - buffer
+    ) {
+      setTimeout(() => {
+        sounds.backgroundSound.currentTime = 0;
+        sounds.backgroundSound.play();
+      }, 0.27);
+    }
+  });
 });
 
 function toggleMusic() {
