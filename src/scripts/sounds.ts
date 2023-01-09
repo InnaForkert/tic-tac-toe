@@ -12,25 +12,27 @@ export const sounds = {
 
 musicBtn?.addEventListener("click", toggleMusic);
 soundBtn?.addEventListener("click", toggleSounds);
-
-sounds.backgroundSound.addEventListener("canplaythrough", () => {
-  sounds.backgroundSound.play();
-  sounds.backgroundSound.addEventListener("timeupdate", () => {
-    const buffer = 0.5;
-    if (
-      sounds.backgroundSound.currentTime >
-      sounds.backgroundSound.duration - buffer
-    ) {
-      setTimeout(() => {
-        sounds.backgroundSound.currentTime = 0;
-        sounds.backgroundSound.play();
-      }, 0.27);
-    }
-  });
-});
+sounds.backgroundSound.muted = true;
+sounds.backgroundSound.loop = true;
 
 function toggleMusic() {
   sounds.backgroundSound.muted = !sounds.backgroundSound.muted;
+  if (!sounds.backgroundSound.muted) {
+    sounds.backgroundSound.play();
+    sounds.backgroundSound.addEventListener("timeupdate", () => {
+      const buffer = 0.5;
+      if (
+        sounds.backgroundSound.currentTime >
+        sounds.backgroundSound.duration - buffer
+      ) {
+        setTimeout(() => {
+          sounds.backgroundSound.currentTime = 0;
+          sounds.backgroundSound.play();
+        }, 0.27);
+      }
+    });
+  }
+
   musicBtn?.classList.toggle("musicOff");
 }
 

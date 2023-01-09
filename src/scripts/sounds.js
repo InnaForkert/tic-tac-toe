@@ -12,21 +12,23 @@ exports.sounds = {
 };
 musicBtn === null || musicBtn === void 0 ? void 0 : musicBtn.addEventListener("click", toggleMusic);
 soundBtn === null || soundBtn === void 0 ? void 0 : soundBtn.addEventListener("click", toggleSounds);
-exports.sounds.backgroundSound.addEventListener("canplaythrough", function () {
-    exports.sounds.backgroundSound.play();
-    exports.sounds.backgroundSound.addEventListener("timeupdate", function () {
-        var buffer = 0.5;
-        if (exports.sounds.backgroundSound.currentTime >
-            exports.sounds.backgroundSound.duration - buffer) {
-            setTimeout(function () {
-                exports.sounds.backgroundSound.currentTime = 0;
-                exports.sounds.backgroundSound.play();
-            }, 0.27);
-        }
-    });
-});
+exports.sounds.backgroundSound.muted = true;
+exports.sounds.backgroundSound.loop = true;
 function toggleMusic() {
     exports.sounds.backgroundSound.muted = !exports.sounds.backgroundSound.muted;
+    if (!exports.sounds.backgroundSound.muted) {
+        exports.sounds.backgroundSound.play();
+        exports.sounds.backgroundSound.addEventListener("timeupdate", function () {
+            var buffer = 0.5;
+            if (exports.sounds.backgroundSound.currentTime >
+                exports.sounds.backgroundSound.duration - buffer) {
+                setTimeout(function () {
+                    exports.sounds.backgroundSound.currentTime = 0;
+                    exports.sounds.backgroundSound.play();
+                }, 0.27);
+            }
+        });
+    }
     musicBtn === null || musicBtn === void 0 ? void 0 : musicBtn.classList.toggle("musicOff");
 }
 function toggleSounds() {
