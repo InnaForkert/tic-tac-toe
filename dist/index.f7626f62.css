@@ -1,3 +1,4 @@
+@import "https://fonts.googleapis.com/css2?family=Indie+Flower&family=Press+Start+2P&display=swap";
 @font-face {
   font-family: main-font;
   src: url("LoveGlitchPersonalUseRegular-vmEyA.640bf4d6.ttf");
@@ -25,7 +26,7 @@ body {
   background-image: url("design-space-paper-textured-background_53876-42312.426a64ae.webp");
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: secondary-font, sans-serif;
+  font-family: Indie Flower, cursive;
 }
 
 * {
@@ -45,7 +46,7 @@ body {
   align-self: center;
   margin-top: 15px;
   padding: .45rem 1rem;
-  font-family: secondary-font, sans-serif;
+  font-family: Indie Flower, cursive;
   font-size: 1.5rem;
   transition: all .235s ease-in-out;
   box-shadow: 15px 28px 25px -18px #0003;
@@ -134,7 +135,7 @@ body {
 .player-name {
   text-align: center;
   margin-block: 25px;
-  font-family: main-font, sans-serif;
+  font-family: Indie Flower, cursive;
   font-size: 1rem;
   font-weight: 400;
   transition: font-size .25s ease-in-out;
@@ -171,7 +172,7 @@ body {
 
 .form-label {
   color: #080818;
-  font-family: secondary-font, sans-serif;
+  font-family: Indie Flower, cursive;
   font-size: 2rem;
   position: relative;
 }
@@ -182,7 +183,7 @@ body {
   border-radius: 2px;
   outline: none;
   padding: 10px;
-  font-family: secondary-font, sans-serif;
+  font-family: Indie Flower, cursive;
   font-size: 1.5rem;
   display: block;
   box-shadow: 0 50px 100px -20px #32325d40, 0 30px 60px -30px #0000004d, inset 0 -2px 6px #0a254059;
@@ -194,7 +195,7 @@ body {
 
 .title {
   color: #080818;
-  font-family: main-font, sans-serif;
+  font-family: Indie Flower, cursive;
   font-size: 4rem;
   font-weight: 400;
 }

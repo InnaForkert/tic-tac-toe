@@ -3,7 +3,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 
-  font-family: secondary-font, sans-serif;
+  font-family: $secondary-font;
 }
 
 * {
@@ -19,7 +19,7 @@ body {
   border-width: 2px;
   box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
   color: $black;
-  font-family: secondary-font, sans-serif;
+  font-family: $secondary-font;
   font-size: 1.5rem;
   padding: 0.45rem 1rem;
   transition: all 235ms ease-in-out;

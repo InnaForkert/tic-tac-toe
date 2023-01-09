@@ -1,4 +1,5 @@
-.gameDiv, .gameDivBot {
+.gameDiv,
+.gameDivBot {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -8,7 +9,8 @@
   gap: 35px;
 }
 
-.fieldy, .fieldyBot {
+.fieldy,
+.fieldyBot {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,7 +29,8 @@
   }
 }
 
-.field, .fieldBot {
+.field,
+.fieldBot {
   display: flex;
   flex-wrap: wrap;
   margin: 15px auto;
@@ -49,7 +52,7 @@
 }
 
 .player-name {
-  font-family: main-font, sans-serif;
+  font-family: $main-font;
   font-size: 1rem;
   font-weight: 400;
   text-align: center;
