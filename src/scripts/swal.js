@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.createSwal = void 0;
+exports.createSwalForbidden = exports.createSwalConfirm = exports.createSwal = void 0;
 var sweetalert2_1 = require("sweetalert2");
 require("animate.css");
 var sounds_1 = require("./sounds");
@@ -85,3 +85,71 @@ function createSwal(title, victory) {
     });
 }
 exports.createSwal = createSwal;
+function createSwalConfirm(title) {
+    return __awaiter(this, void 0, void 0, function () {
+        var result;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, sweetalert2_1["default"].fire({
+                        title: title,
+                        padding: 10,
+                        background: "rgba(0,0,0,0.2) url(https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg)",
+                        backdrop: "\n        rgba(0,0,0,0.8)\n        ",
+                        confirmButtonText: "Yep!",
+                        showCancelButton: true,
+                        cancelButtonText: "Nope!",
+                        showCloseButton: true,
+                        showClass: {
+                            popup: "animate__animated animate__bounceIn"
+                        },
+                        hideClass: {
+                            popup: "animate__animated animate__bounceOut"
+                        },
+                        customClass: {
+                            confirmButton: "button swal",
+                            cancelButton: "button swal",
+                            closeButton: "black swal"
+                        },
+                        buttonsStyling: false
+                    })];
+                case 1:
+                    result = _a.sent();
+                    return [2 /*return*/, result.isConfirmed];
+            }
+        });
+    });
+}
+exports.createSwalConfirm = createSwalConfirm;
+function createSwalForbidden(title) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    sounds_1.sounds.takenSound.play();
+                    return [4 /*yield*/, sweetalert2_1["default"].fire({
+                            title: title,
+                            padding: 10,
+                            background: "rgba(0,0,0,0.2) url(https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg)",
+                            backdrop: "\n        rgba(0,0,0,0.8)\n        ",
+                            confirmButtonText: "Ok!",
+                            showClass: {
+                                popup: "animate__animated animate__bounceIn"
+                            },
+                            hideClass: {
+                                popup: "animate__animated animate__bounceOut"
+                            },
+                            customClass: {
+                                confirmButton: "button swal",
+                                cancelButton: "button swal",
+                                closeButton: "black swal"
+                            },
+                            buttonsStyling: false
+                        })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createSwalForbidden = createSwalForbidden;

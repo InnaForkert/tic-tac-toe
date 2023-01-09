@@ -41,3 +41,56 @@ export async function createSwal(title: string, victory: boolean) {
   });
   return result.isConfirmed;
 }
+export async function createSwalConfirm(title: string) {
+  const result = await Swal.fire({
+    title,
+    padding: 10,
+    background:
+      "rgba(0,0,0,0.2) url(https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg)",
+    backdrop: `
+        rgba(0,0,0,0.8)
+        `,
+    confirmButtonText: "Yep!",
+    showCancelButton: true,
+    cancelButtonText: "Nope!",
+    showCloseButton: true,
+    showClass: {
+      popup: "animate__animated animate__bounceIn",
+    },
+    hideClass: {
+      popup: "animate__animated animate__bounceOut",
+    },
+    customClass: {
+      confirmButton: "button swal",
+      cancelButton: "button swal",
+      closeButton: "black swal",
+    },
+    buttonsStyling: false,
+  });
+  return result.isConfirmed;
+}
+export async function createSwalForbidden(title: string) {
+  sounds.takenSound.play();
+  await Swal.fire({
+    title,
+    padding: 10,
+    background:
+      "rgba(0,0,0,0.2) url(https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg)",
+    backdrop: `
+        rgba(0,0,0,0.8)
+        `,
+    confirmButtonText: "Ok!",
+    showClass: {
+      popup: "animate__animated animate__bounceIn",
+    },
+    hideClass: {
+      popup: "animate__animated animate__bounceOut",
+    },
+    customClass: {
+      confirmButton: "button swal",
+      cancelButton: "button swal",
+      closeButton: "black swal",
+    },
+    buttonsStyling: false,
+  });
+}

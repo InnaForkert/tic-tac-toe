@@ -1,6 +1,10 @@
 import { refs } from "./scripts/refs";
 import { createBotCombo } from "./scripts/botCombo";
-import { createSwal } from "./scripts/swal";
+import {
+  createSwal,
+  createSwalConfirm,
+  createSwalForbidden,
+} from "./scripts/swal";
 import { sounds } from "./scripts/sounds";
 import "./scripts/sounds";
 
@@ -58,11 +62,11 @@ fieldiesBot.forEach((fieldy) => {
 resetBtn?.addEventListener("click", reset);
 resetBtnBot?.addEventListener("click", reset);
 
-restartBtn?.addEventListener("click", () => {
-  if (confirm("Are you sure you want to restart?")) restart();
+restartBtn?.addEventListener("click", async () => {
+  if (await createSwalConfirm("Are you sure you want to restart?")) restart();
 });
-restartBtnBot?.addEventListener("click", () => {
-  if (confirm("Are you sure you want to restart?")) restart();
+restartBtnBot?.addEventListener("click", async () => {
+  if (await createSwalConfirm("Are you sure you want to restart?")) restart();
 });
 
 // player vs player
@@ -107,8 +111,7 @@ function handlePlayerMove(e: MouseEvent) {
     swapPlayers();
     saveData();
   } else {
-    takenSound.play();
-    alert("This one is taken!");
+    createSwalForbidden("This one is taken!");
   }
 }
 
@@ -156,9 +159,9 @@ async function alertVictory(arr: number[]) {
   else restart();
 }
 
-function checkForNoMoves() {
+async function checkForNoMoves() {
   if (currentComboO.length === 4 && currentComboX.length === 5) {
-    const wantsReset = confirm("Oh no, no more moves! Reset?");
+    const wantsReset = await createSwalConfirm("Oh no, no more moves! Reset?");
     wantsReset ? reset() : restart();
   }
 }
@@ -240,8 +243,7 @@ function handlePlayerMoveBot(e: MouseEvent) {
       if (currentSymbol === "O") botMove();
     }
   } else {
-    takenSound.play();
-    alert("This one is taken!");
+    createSwalForbidden("This one is taken!");
   }
 }
 

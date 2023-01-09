@@ -73,14 +73,28 @@ fieldiesBot.forEach(function (fieldy) {
 });
 resetBtn === null || resetBtn === void 0 ? void 0 : resetBtn.addEventListener("click", reset);
 resetBtnBot === null || resetBtnBot === void 0 ? void 0 : resetBtnBot.addEventListener("click", reset);
-restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListener("click", function () {
-    if (confirm("Are you sure you want to restart?"))
-        restart();
-});
-restartBtnBot === null || restartBtnBot === void 0 ? void 0 : restartBtnBot.addEventListener("click", function () {
-    if (confirm("Are you sure you want to restart?"))
-        restart();
-});
+restartBtn === null || restartBtn === void 0 ? void 0 : restartBtn.addEventListener("click", function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0, swal_1.createSwalConfirm)("Are you sure you want to restart?")];
+            case 1:
+                if (_a.sent())
+                    restart();
+                return [2 /*return*/];
+        }
+    });
+}); });
+restartBtnBot === null || restartBtnBot === void 0 ? void 0 : restartBtnBot.addEventListener("click", function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, (0, swal_1.createSwalConfirm)("Are you sure you want to restart?")];
+            case 1:
+                if (_a.sent())
+                    restart();
+                return [2 /*return*/];
+        }
+    });
+}); });
 // player vs player
 // game start
 function handleSubmit(e) {
@@ -117,8 +131,7 @@ function handlePlayerMove(e) {
         saveData();
     }
     else {
-        takenSound.play();
-        alert("This one is taken!");
+        (0, swal_1.createSwalForbidden)("This one is taken!");
     }
 }
 function paintSymbol(div) {
@@ -179,10 +192,21 @@ function alertVictory(arr) {
     });
 }
 function checkForNoMoves() {
-    if (currentComboO.length === 4 && currentComboX.length === 5) {
-        var wantsReset = confirm("Oh no, no more moves! Reset?");
-        wantsReset ? reset() : restart();
-    }
+    return __awaiter(this, void 0, void 0, function () {
+        var wantsReset;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (!(currentComboO.length === 4 && currentComboX.length === 5)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, (0, swal_1.createSwalConfirm)("Oh no, no more moves! Reset?")];
+                case 1:
+                    wantsReset = _a.sent();
+                    wantsReset ? reset() : restart();
+                    _a.label = 2;
+                case 2: return [2 /*return*/];
+            }
+        });
+    });
 }
 function changeSymbol() {
     currentSymbol = currentSymbol === "X" ? "O" : "X";
@@ -254,8 +278,7 @@ function handlePlayerMoveBot(e) {
         }
     }
     else {
-        takenSound.play();
-        alert("This one is taken!");
+        (0, swal_1.createSwalForbidden)("This one is taken!");
     }
 }
 function stopListening() {

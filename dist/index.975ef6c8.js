@@ -725,10 +725,40 @@ fieldiesBot.forEach(function(fieldy) {
 resetBtn === null || resetBtn === void 0 || resetBtn.addEventListener("click", reset);
 resetBtnBot === null || resetBtnBot === void 0 || resetBtnBot.addEventListener("click", reset);
 restartBtn === null || restartBtn === void 0 || restartBtn.addEventListener("click", function() {
-    if (confirm("Are you sure you want to restart?")) restart();
+    return __awaiter(void 0, void 0, void 0, function() {
+        return __generator(this, function(_a) {
+            switch(_a.label){
+                case 0:
+                    return [
+                        4 /*yield*/ ,
+                        (0, swal_1.createSwalConfirm)("Are you sure you want to restart?")
+                    ];
+                case 1:
+                    if (_a.sent()) restart();
+                    return [
+                        2 /*return*/ 
+                    ];
+            }
+        });
+    });
 });
 restartBtnBot === null || restartBtnBot === void 0 || restartBtnBot.addEventListener("click", function() {
-    if (confirm("Are you sure you want to restart?")) restart();
+    return __awaiter(void 0, void 0, void 0, function() {
+        return __generator(this, function(_a) {
+            switch(_a.label){
+                case 0:
+                    return [
+                        4 /*yield*/ ,
+                        (0, swal_1.createSwalConfirm)("Are you sure you want to restart?")
+                    ];
+                case 1:
+                    if (_a.sent()) restart();
+                    return [
+                        2 /*return*/ 
+                    ];
+            }
+        });
+    });
 });
 // player vs player
 // game start
@@ -764,10 +794,7 @@ function handlePlayerMove(e) {
         changeSymbol();
         swapPlayers();
         saveData();
-    } else {
-        takenSound.play();
-        alert("This one is taken!");
-    }
+    } else (0, swal_1.createSwalForbidden)("This one is taken!");
 }
 function paintSymbol(div) {
     div.innerText = currentSymbol;
@@ -849,10 +876,30 @@ function alertVictory(arr) {
     });
 }
 function checkForNoMoves() {
-    if (currentComboO.length === 4 && currentComboX.length === 5) {
-        var wantsReset = confirm("Oh no, no more moves! Reset?");
-        wantsReset ? reset() : restart();
-    }
+    return __awaiter(this, void 0, void 0, function() {
+        var wantsReset;
+        return __generator(this, function(_a) {
+            switch(_a.label){
+                case 0:
+                    if (!(currentComboO.length === 4 && currentComboX.length === 5)) return [
+                        3 /*break*/ ,
+                        2
+                    ];
+                    return [
+                        4 /*yield*/ ,
+                        (0, swal_1.createSwalConfirm)("Oh no, no more moves! Reset?")
+                    ];
+                case 1:
+                    wantsReset = _a.sent();
+                    wantsReset ? reset() : restart();
+                    _a.label = 2;
+                case 2:
+                    return [
+                        2 /*return*/ 
+                    ];
+            }
+        });
+    });
 }
 function changeSymbol() {
     currentSymbol = currentSymbol === "X" ? "O" : "X";
@@ -914,10 +961,7 @@ function handlePlayerMoveBot(e) {
             currentSymbol = currentSymbol === "X" ? "O" : "X";
             if (currentSymbol === "O") botMove();
         }
-    } else {
-        takenSound.play();
-        alert("This one is taken!");
-    }
+    } else (0, swal_1.createSwalForbidden)("This one is taken!");
 }
 function stopListening() {
     fieldiesBot.forEach(function(fieldy) {
@@ -1394,7 +1438,7 @@ var __generator = this && this.__generator || function(thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.createSwal = void 0;
+exports.createSwalForbidden = exports.createSwalConfirm = exports.createSwal = void 0;
 var sweetalert2_1 = require("sweetalert2");
 require("animate.css");
 var sounds_1 = require("./sounds");
@@ -1443,6 +1487,86 @@ function createSwal(title, victory) {
     });
 }
 exports.createSwal = createSwal;
+function createSwalConfirm(title) {
+    return __awaiter(this, void 0, void 0, function() {
+        var result;
+        return __generator(this, function(_a) {
+            switch(_a.label){
+                case 0:
+                    return [
+                        4 /*yield*/ ,
+                        sweetalert2_1["default"].fire({
+                            title: title,
+                            padding: 10,
+                            background: "rgba(0,0,0,0.2) url(https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg)",
+                            backdrop: "\n        rgba(0,0,0,0.8)\n        ",
+                            confirmButtonText: "Yep!",
+                            showCancelButton: true,
+                            cancelButtonText: "Nope!",
+                            showCloseButton: true,
+                            showClass: {
+                                popup: "animate__animated animate__bounceIn"
+                            },
+                            hideClass: {
+                                popup: "animate__animated animate__bounceOut"
+                            },
+                            customClass: {
+                                confirmButton: "button swal",
+                                cancelButton: "button swal",
+                                closeButton: "black swal"
+                            },
+                            buttonsStyling: false
+                        })
+                    ];
+                case 1:
+                    result = _a.sent();
+                    return [
+                        2 /*return*/ ,
+                        result.isConfirmed
+                    ];
+            }
+        });
+    });
+}
+exports.createSwalConfirm = createSwalConfirm;
+function createSwalForbidden(title) {
+    return __awaiter(this, void 0, void 0, function() {
+        return __generator(this, function(_a) {
+            switch(_a.label){
+                case 0:
+                    sounds_1.sounds.takenSound.play();
+                    return [
+                        4 /*yield*/ ,
+                        sweetalert2_1["default"].fire({
+                            title: title,
+                            padding: 10,
+                            background: "rgba(0,0,0,0.2) url(https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg)",
+                            backdrop: "\n        rgba(0,0,0,0.8)\n        ",
+                            confirmButtonText: "Ok!",
+                            showClass: {
+                                popup: "animate__animated animate__bounceIn"
+                            },
+                            hideClass: {
+                                popup: "animate__animated animate__bounceOut"
+                            },
+                            customClass: {
+                                confirmButton: "button swal",
+                                cancelButton: "button swal",
+                                closeButton: "black swal"
+                            },
+                            buttonsStyling: false
+                        })
+                    ];
+                case 1:
+                    _a.sent();
+                    return [
+                        2 /*return*/ 
+                    ];
+            }
+        });
+    });
+}
+exports.createSwalForbidden = createSwalForbidden;
 
 },{"sweetalert2":"1HyFr","animate.css":"8t3va","./sounds":"7Hlpd"}],"1HyFr":[function(require,module,exports) {
 /*!
