@@ -533,6 +533,11 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"8lqZg":[function(require,module,exports) {
 "use strict";
+exports.__esModule = true;
+require("./scripts/mainLogic");
+
+},{"./scripts/mainLogic":"61mVs"}],"61mVs":[function(require,module,exports) {
+"use strict";
 var __awaiter = this && this.__awaiter || function(thisArg, _arguments, P, generator) {
     function adopt(value) {
         return value instanceof P ? value : new P(function(resolve) {
@@ -656,13 +661,13 @@ var __generator = this && this.__generator || function(thisArg, body) {
     }
 };
 exports.__esModule = true;
-var refs_1 = require("./scripts/refs");
-var botCombo_1 = require("./scripts/botCombo");
-var swal_1 = require("./scripts/swal");
-var sounds_1 = require("./scripts/sounds");
-require("./scripts/sounds");
+var refs_1 = require("./refs");
+var botCombo_1 = require("./botCombo");
+var swal_1 = require("./swal");
+var sounds_1 = require("./sounds");
+require("./sounds");
 var menu = refs_1.refs.menu, gameDiv = refs_1.refs.gameDiv, gameDivBot = refs_1.refs.gameDivBot, form = refs_1.refs.form, player1 = refs_1.refs.player1, player2 = refs_1.refs.player2, player1GameName = refs_1.refs.player1GameName, player2GameName = refs_1.refs.player2GameName, fieldies = refs_1.refs.fieldies, fieldiesBot = refs_1.refs.fieldiesBot, restartBtn = refs_1.refs.restartBtn, restartBtnBot = refs_1.refs.restartBtnBot, resetBtn = refs_1.refs.resetBtn, resetBtnBot = refs_1.refs.resetBtnBot, botStart = refs_1.refs.botStart;
-var stepSound = sounds_1.sounds.stepSound, takenSound = sounds_1.sounds.takenSound;
+var stepSound = sounds_1.sounds.stepSound;
 var winningCombos = [
     [
         1,
@@ -1158,7 +1163,7 @@ function checkPossibleWin(arr) {
     return true;
 }
 
-},{"./scripts/refs":"jHtzO","./scripts/botCombo":"2BYuR","./scripts/swal":"kRPvh","./scripts/sounds":"7Hlpd"}],"jHtzO":[function(require,module,exports) {
+},{"./refs":"jHtzO","./botCombo":"2BYuR","./swal":"kRPvh","./sounds":"7Hlpd"}],"jHtzO":[function(require,module,exports) {
 "use strict";
 exports.__esModule = true;
 exports.refs = void 0;
